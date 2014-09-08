@@ -1,23 +1,28 @@
 <?php
 
-interface Metabox {
-    public function __construct( $options = array() );
+if ( ! interface_exists( 'Metabox' ) ) {
+    interface Metabox {
+        public function __construct( PostMetaFactory $post_meta_factory, $options = array() );
 
-    public function add_metabox();
+        public function add_metabox();
 
-    public function display_metabox();
+        public function display_metabox();
 
-    public function save( $post_id );
+        public function save( $post_id );
+    }
 }
 
-class WP_Metabox {
+class WP_Metabox implements Metabox {
     protected $name;
     protected $metadata;
     protected $label;
     protected $posttype;
+    protected $_post_meta_factory;
 
 
-    public function __construct( $options = array() ) {
+    public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
+        $this->_post_meta_factory = $post_meta_factory;
+
         $this->name = $options['name'];
         $this->label = $options['label'];
         if ( $options['posttype'] ) $this->posttype = $options['posttype']; else $this->posttype = 'post';
@@ -56,12 +61,4 @@ class WP_Metabox {
       
     }
     
-}
-
-class WP_SimpleMetabox extends WP_Metabox {
-    public function __construct( $options ) {
-        parent::__construct( $options );
-        $this->metadata[ $this->name ] = WP_PostMetaFactory::create( $this->name, array( 'label' => 'none' ) );
-    }
-
 }

@@ -2,12 +2,20 @@
 
 #include_once( dirname( __FILE__ ) . '/lib/wp-content-types.php' );
 
-class Test_Metabox extends WP_Metabox {
-    public function __construct( $options ) {
-        parent::__construct( $options );
+class WP_SimpleMetabox extends WP_Metabox {
+    public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
+        parent::__construct( $post_meta_factory, $options );
+        $this->metadata[ $this->name ] = $this->_post_meta_factory->create( $this->name, array( 'label' => 'none' ) );
+    }
 
-        $this->metadata['test'] = WP_PostMetaFactory::create( 'test' );
-        $this->metadata['another'] = WP_PostMetaFactory::create( 'another' );
+}
+
+class Test_Metabox extends WP_Metabox {
+    public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
+        parent::__construct( $post_meta_factory, $options );
+
+        $this->metadata['test'] = $post_meta_factory->create( 'test' );
+        $this->metadata['another'] = $post_meta_factory->create( 'another' );
 
         add_filter( 'the_content' , array($this, 'display') );
     }
@@ -21,7 +29,7 @@ class Test_Metabox extends WP_Metabox {
     }
 }
 
-$test = new Test_Metabox( array(
+$test = new Test_Metabox( new WP_PostMetaFactory(), array(
     'name' => 'test',
     'label' => 'Test',
     'posttype' => 'test-content-type',
@@ -64,13 +72,13 @@ class Test_Content_Type { #extends WP_ContentType {
             'rewrite' => array('with_front' => false, 'slug' => 'test')
         ));
 
-        $this->metaboxes['project-url'] = new WP_SimpleMetabox( array (
+        $this->metaboxes['project-url'] = new WP_SimpleMetabox( new WP_PostMetaFactory(), array (
             'name' => 'project-url',
             'label' => 'Project URL',
             'posttype' => $this->key
             )
         );
-        $this->metaboxes['project-url'] = new WP_SimpleMetabox( array (
+        $this->metaboxes['project-url'] = new WP_SimpleMetabox( new WP_PostMetaFactory(), array (
             'name' => 'project-date',
             'label' => 'Project Date',
             'posttype' => $this->key

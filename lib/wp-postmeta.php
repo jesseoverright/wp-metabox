@@ -1,12 +1,20 @@
 <?php
 
-interface PostMeta {
+if ( ! interface_exists( 'PostMeta' ) ) {
+    interface PostMeta {
 
-    public function __construct( $key, $options);
+        public function __construct( $key, $options = array() );
 
-    public function display_input( $post_id );
+        public function display_input( $post_id );
 
-    public function update($post_id, $data);
+        public function update($post_id, $data);
+    }
+}
+
+if ( ! interface_exists( 'PostMetaFactory' ) ) {
+    interface PostMetaFactory {
+        public static function create( $key, $options = array() );
+    }
 }
 
 class WP_PostMeta implements PostMeta {
@@ -99,7 +107,7 @@ class WP_SelectMeta extends WP_PostMeta {
 // WP_TextareaMeta
 // WP_MediaMeta
 
-class WP_PostMetaFactory {
+class WP_PostMetaFactory implements PostMetaFactory {
 
     public static function create( $key, $options = array() ) {
 

@@ -28,3 +28,10 @@
 include_once( dirname( __FILE__ ) . '/lib/wp-postmeta.php' );
 include_once( dirname( __FILE__ ) . '/lib/wp-metabox.php' );
 include_once( dirname( __FILE__ ) . '/test.php' );
+
+function wp_metabox_init() {
+    // load any dependent plugins
+    do_action( 'wp_metabox_init' );
+}
+
+add_action( 'plugins_loaded', 'wp_metabox_init' );
