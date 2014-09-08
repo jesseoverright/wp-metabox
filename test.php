@@ -29,7 +29,7 @@ class Test_Metabox extends WP_Metabox {
     }
 }
 
-$test = new Test_Metabox( new WP_PostMetaFactory(), array(
+$test = new Test_Metabox( WP_PostMetaFactory::get_instance(), array(
     'name' => 'test',
     'label' => 'Test',
     'posttype' => 'test-content-type',
@@ -72,13 +72,13 @@ class Test_Content_Type { #extends WP_ContentType {
             'rewrite' => array('with_front' => false, 'slug' => 'test')
         ));
 
-        $this->metaboxes['project-url'] = new WP_SimpleMetabox( new WP_PostMetaFactory(), array (
+        $this->metaboxes['project-url'] = new WP_SimpleMetabox( WP_PostMetaFactory::get_instance(), array (
             'name' => 'project-url',
             'label' => 'Project URL',
             'posttype' => $this->key
             )
         );
-        $this->metaboxes['project-url'] = new WP_SimpleMetabox( new WP_PostMetaFactory(), array (
+        $this->metaboxes['project-url'] = new WP_SimpleMetabox( WP_PostMetaFactory::get_instance(), array (
             'name' => 'project-date',
             'label' => 'Project Date',
             'posttype' => $this->key

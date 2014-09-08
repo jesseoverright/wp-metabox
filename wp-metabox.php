@@ -26,7 +26,7 @@
 */
 
 include_once( dirname( __FILE__ ) . '/lib/wp-postmeta.php' );
-include_once( dirname( __FILE__ ) . '/lib/wp-postmeat-factory.php' );
+include_once( dirname( __FILE__ ) . '/lib/wp-postmeta-factory.php' );
 include_once( dirname( __FILE__ ) . '/lib/wp-metabox.php' );
 include_once( dirname( __FILE__ ) . '/test.php' );
 
