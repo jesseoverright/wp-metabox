@@ -62,3 +62,14 @@ class WP_Metabox implements Metabox {
     }
     
 }
+
+class WP_SimpleMetabox extends WP_Metabox {
+    public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
+        parent::__construct( $post_meta_factory, $options );
+
+        // hide the metaboxes label
+        $options['label'] = 'none';
+        $this->metadata[ $this->name ] = $this->_post_meta_factory->create( $this->name, $options );
+    }
+
+}

@@ -2,14 +2,6 @@
 
 #include_once( dirname( __FILE__ ) . '/lib/wp-content-types.php' );
 
-class WP_SimpleMetabox extends WP_Metabox {
-    public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
-        parent::__construct( $post_meta_factory, $options );
-        $this->metadata[ $this->name ] = $this->_post_meta_factory->create( $this->name, array( 'label' => 'none' ) );
-    }
-
-}
-
 class Test_Metabox extends WP_Metabox {
     public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
         parent::__construct( $post_meta_factory, $options );
