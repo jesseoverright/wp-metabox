@@ -7,7 +7,7 @@ if ( ! interface_exists( 'PostMeta' ) ) {
 
         public function display_input( $post_id );
 
-        public function update($post_id, $data);
+        public function update( $post_id, $data );
     }
 }
 
@@ -28,10 +28,9 @@ class WP_PostMeta implements PostMeta {
     public function display_input( $post_id, $data = false ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
-        if ( $this->label ) {
-            echo '<label for="' . $this->key . '">' . $this->label . '</label>';
-        }
-        echo '<input type="' . $this->input_type . '" id ="'. $this->key . '" name="' . $this->key . '" value="' . $data . '" size="' . $this->size . '" style="width: 100%" >';
+        $this->display_label();
+        
+        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" name=\"{$this->key}\" value=\"{$data}\" size=\"{$this->size}\" style=\"width: 100%\">";
     }
 
     public function update( $post_id, $data ) {
@@ -46,6 +45,12 @@ class WP_PostMeta implements PostMeta {
             delete_post_meta($post_id, $this->key, get_post_meta($post_id, $this->key, true));
         }
 
+    }
+
+    protected function display_label() {
+        if ( $this->label ) {
+            echo "<label for=\"{$this->key}\">{$this->label}</label>";
+        }
     }
 
 }
@@ -101,10 +106,9 @@ class WP_TextareaMeta extends WP_PostMeta {
     public function display_input( $post_id, $data = false ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
-        if ( $this->label ) {
-            echo '<label for="' . $this->key . '">' . $this->label . '</label>';
-        }
-        echo '<textarea id ="'. $this->key . '" name="' . $this->key . '" size="' . $this->size . '" style="width: 100%" >' . $data . '</textarea>';
+        $this->display_label();
+
+        echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" size=\"{$this->size}\" style=\"width: 100%\">{$data}</textarea>";
     }
 
 }

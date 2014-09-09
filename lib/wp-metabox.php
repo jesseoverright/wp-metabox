@@ -39,7 +39,7 @@ class WP_Metabox implements Metabox {
     public function display_metabox() {
         global $post;
 
-        echo '<input type="hidden" name="' . $this->name . '_nonce" id="' . $this->name . '_nonce" value="' . wp_create_nonce( $this->name . '_save' ) . '" />';
+        echo "<input type=\"hidden\" name=\"{$this->name}_nonce\" id=\"{$this->name}_nonce\" value=\"" . wp_create_nonce( $this->name . '_save' ) . "\" />"; 
 
         foreach ( $this->metadata as $key => $meta ) {
             $meta->display_input( $post->ID );
