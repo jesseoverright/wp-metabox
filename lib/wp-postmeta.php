@@ -55,9 +55,6 @@ class WP_TextMeta extends WP_PostMeta {
 }
 
 class WP_URLMeta extends WP_TextMeta {
-    public function __construct( $key, $options = array() ) {
-        parent::__construct( $key, $options );
-    }
 
     public function display_input( $post_id ) {
         $data = esc_url( get_post_meta( $post_id, $this->key, true ) );
@@ -98,5 +95,17 @@ class WP_SelectMeta extends WP_PostMeta {
 
 }
 
-// WP_TextareaMeta
+class WP_TextareaMeta extends WP_PostMeta {
+    protected $input_type = 'textarea';
+
+    public function display_input( $post_id, $data = false ) {
+        if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
+        
+        if ( $this->label ) {
+            echo '<label for="' . $this->key . '">' . $this->label . '</label>';
+        }
+        echo '<textarea id ="'. $this->key . '" name="' . $this->key . '" size="' . $this->size . '" style="width: 100%" >' . $data . '</textarea>';
+    }
+
+}
 // WP_MediaMeta

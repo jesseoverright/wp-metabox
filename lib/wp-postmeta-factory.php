@@ -13,6 +13,9 @@ class WP_PostMetaFactory implements PostMetaFactory {
 
     private static $instance;
 
+    protected function __construct() {
+    }
+
     public static function get_instance() {
         if ( !isset( self::$instance ) ) {
             $class = __CLASS__;
@@ -24,19 +27,22 @@ class WP_PostMetaFactory implements PostMetaFactory {
 
     public function create( $key, $options = array() ) {
 
-        if ( $options['type'] ) $type = $options['type']; else $type = 'text';
+        if ( $options['type'] ) $meta_type = $options['type']; else $meta_type = 'text';
     
         switch ( $meta_type ) {
             case 'url':
-                            $PostMeta = new WP_URLMeta( $key, $options );
-                            break;
+                $PostMeta = new WP_URLMeta( $key, $options );
+                break;
             case 'select':
-                            $PostMeta = new WP_SelectMeta( $key, $options );
-                            break;
+                $PostMeta = new WP_SelectMeta( $key, $options );
+                break;
+            case 'textarea':
+                $PostMeta = new WP_TextareaMeta( $key, $options );
+                break;
             case 'text':
             case 'int':
             default:
-                            $PostMeta = new WP_TextMeta( $key, $options );
+                $PostMeta = new WP_TextMeta( $key, $options );
         }
 
         return $PostMeta;
