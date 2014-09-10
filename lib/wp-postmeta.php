@@ -15,7 +15,7 @@ class WP_PostMeta implements PostMeta {
 
     protected $key;
     protected $label;
-    protected $size = 40;
+    protected $max_length = 40;
 
     protected $input_type = 'text';
 
@@ -30,7 +30,7 @@ class WP_PostMeta implements PostMeta {
         
         $this->display_label();
         
-        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" name=\"{$this->key}\" value=\"{$data}\" size=\"{$this->size}\" style=\"width: 100%\">";
+        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"wp-metabox-input\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\">";
     }
 
     public function update( $post_id, $data ) {
@@ -56,6 +56,8 @@ class WP_PostMeta implements PostMeta {
 }
 
 class WP_TextMeta extends WP_PostMeta {
+    protected $max_length = 255;
+
     // add basic text validation
 }
 
@@ -108,8 +110,12 @@ class WP_TextareaMeta extends WP_PostMeta {
         
         $this->display_label();
 
-        echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" size=\"{$this->size}\" style=\"width: 100%\">{$data}</textarea>";
+        echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" class=\"wp-metabox-textarea\">{$data}</textarea>";
     }
 
 }
 // WP_MediaMeta
+// WP_DateMeta
+// WP_RadioMeta
+// WP_WYSIWYGMeta
+// WP_EmailMeta
