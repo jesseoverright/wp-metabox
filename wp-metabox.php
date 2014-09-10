@@ -35,4 +35,9 @@ function wp_metabox_init() {
     do_action( 'wp_metabox_init' );
 }
 
+function wp_metabox_enqueue_style() {
+    wp_enqueue_style( 'wp-metabox-css', plugins_url( '/wp-metabox/wp-metabox.css' ) );
+}
+
 add_action( 'plugins_loaded', 'wp_metabox_init' );
+add_action( 'admin_init', 'wp_metabox_enqueue_style' );
