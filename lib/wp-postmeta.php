@@ -81,6 +81,7 @@ class WP_ArrayMeta extends WP_PostMeta {
 }
 
 class WP_SelectMeta extends WP_PostMeta {
+    protected $input_type = 'select';
     protected $choices;
 
     public function __construct( $key, $options = array() ) {
@@ -91,6 +92,20 @@ class WP_SelectMeta extends WP_PostMeta {
 
         parent::__construct( $key, $options );
 
+    }
+
+    public function display_input( $post_id, $data = false ) {
+        if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
+
+        $this->display_label();
+
+        echo "<select>";
+
+        foreach ( $this->choices as $choice ) {
+            echo "<option>";
+        }
+
+        echo "</select>";
     }
 
     public function update( $post_id, $data ) {
