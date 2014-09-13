@@ -101,20 +101,30 @@ class WP_SelectMeta extends WP_PostMeta {
     public function display_input( $post_id, $data = false ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
 
+        echo "<p>";
+
         $this->display_label();
 
-        echo "<select>";
+        echo "<br />";
 
-        foreach ( $this->choices as $choice ) {
-            echo "<option>";
+        echo "<select id=\"{$this->key}\" name=\"{$this->key}\">";
+
+        foreach ( $this->choices as $value => $label ) {
+            echo "<option value=\"{$value}\"";
+            if ( $value == $data ) {
+                echo " selected";
+            }
+            echo ">{$label}</option>";
         }
 
         echo "</select>";
+
+        echo "</p>";
     }
 
     public function update( $post_id, $data ) {
 
-        if ( in_array( $data, $this->choices ) ) $data = $data; else $data = '';
+        if ( array_key_exists( $data, $this->choices ) ) $data = $data; else $data = '';
 
         parent::update( $post_id, $data );
     }

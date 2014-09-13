@@ -7,7 +7,17 @@ class Test_Metabox extends WP_Metabox {
         parent::__construct( $post_meta_factory, $options );
 
         $this->metadata['test'] = $post_meta_factory->create( 'test' );
-        $this->metadata['another'] = $post_meta_factory->create( 'another' );
+        $this->metadata['select'] = $post_meta_factory->create(
+            'select',
+            array(
+                'type' => 'select',
+                'choices' => array(
+                    1 => 'one',
+                    2 => 'two',
+                    3 => 'three',
+                )
+            )
+        );
 
         add_filter( 'the_content' , array($this, 'display') );
     }
