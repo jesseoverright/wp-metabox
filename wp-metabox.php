@@ -40,4 +40,4 @@ function wp_metabox_enqueue_style() {
 }
 
 add_action( 'plugins_loaded', 'wp_metabox_init' );
-add_action( 'admin_init', 'wp_metabox_enqueue_style' );
+//add_action( 'admin_init', 'wp_metabox_enqueue_style' );

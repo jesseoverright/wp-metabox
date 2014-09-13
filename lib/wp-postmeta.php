@@ -28,9 +28,13 @@ class WP_PostMeta implements PostMeta {
     public function display_input( $post_id, $data = false ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
+        echo "</p>";
+
         $this->display_label();
         
-        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"wp-metabox-input\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\">";
+        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"widefat\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\">";
+
+        echo "</p>";
     }
 
     public function update( $post_id, $data ) {
@@ -125,7 +129,7 @@ class WP_TextareaMeta extends WP_PostMeta {
         
         $this->display_label();
 
-        echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" class=\"wp-metabox-textarea\">{$data}</textarea>";
+        echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" class=\"widefat\">{$data}</textarea>";
     }
 
 }
