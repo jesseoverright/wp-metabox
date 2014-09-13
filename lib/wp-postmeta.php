@@ -143,7 +143,68 @@ class WP_TextareaMeta extends WP_PostMeta {
     }
 
 }
-// WP_MediaMeta
+
+class WP_MediaMeta extends WP_PostMeta {
+    protected $input_type = 'media';
+
+    public function __construct( $key, $options = array() ) {
+        parent::__construct( $key, $options );
+
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+    }
+
+    public function display_input( $post_id ) {
+        if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
+        
+        if ( ! array_key_exists( 'wp-media-postmeta-src', $data ) ) $data = array();
+
+        $this->display_label();
+        ?>
+        <p class="hide-if-no-js">
+            <a title="Set Image" href="javascript:;" id="set-wp-media-postmeta-thumbnail">Set Image</a>
+        </p>
+
+        <div id="wp-media-postmeta-image-container" class="hidden">
+            <img src="<?php echo $data['wp-media-postmeta-src']; ?>" alt="<?php echo $data['wp-media-postmeta-alt']; ?>" title="<?php echo $data['wp-media-postmeta-title']; ?>" />
+        </div><!-- #wp-media-postmeta-image-container -->
+
+        <p class="hide-if-no-js hidden">
+            <a title="Remove Image" href="javascript:;" id="remove-wp-media-postmeta-thumbnail">Remove Image</a>
+        </p><!-- .hide-if-no-js -->
+
+        <p id="wp-media-postmeta-image-info">
+            <input type="hidden" id="wp-media-postmeta-src" name="wp-media-postmeta-src" value="<?php echo $data['wp-media-postmeta-src'] ?>" />
+            <input type="hidden" id="wp-media-postmeta-title" name="wp-media-postmeta-title" value="<?php echo $data['wp-media-postmeta-title'] ?>" />
+            <input type="hidden" id="wp-media-postmeta-alt" name="wp-media-postmeta-alt" value="<?php echo $data['wp-media-postmeta-alt'] ?>" />
+        </p><!-- #wp-media-postmeta-image-meta -->
+        <?php
+    }
+
+    public function update( $post_id, $data ) {
+        $media = array();
+        if ( isset( $_POST['wp-media-postmeta-src'] ) ) {
+            $media['wp-media-postmeta-src'] = sanitize_text_field( $_POST['wp-media-postmeta-src'] );
+        }
+
+        if ( isset( $_POST['wp-media-postmeta-title'] ) ) {
+            $media['wp-media-postmeta-title'] = sanitize_text_field( $_POST['wp-media-postmeta-title'] );
+        }
+
+        if ( isset( $_POST['wp-media-postmeta-alt'] ) ) {
+            $media['wp-media-postmeta-alt'] = sanitize_text_field( $_POST['wp-media-postmeta-alt'] );
+        }
+
+        parent::update( $post_id, $media );
+    }
+
+    public function enqueue_scripts() {
+        wp_enqueue_media();
+
+        wp_enqueue_script( $this->key . '-media', plugin_dir_url( __FILE__ ) . 'js/media.js', array( 'jquery' ), 'version' );
+
+    }
+}
+
 // WP_DateMeta
 // WP_RadioMeta
 // WP_WYSIWYGMeta

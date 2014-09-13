@@ -18,6 +18,7 @@ class Test_Metabox extends WP_Metabox {
                 )
             )
         );
+        $this->metadata['image_uload'] = $post_meta_factory->create( 'image_upload', array( 'type' => 'media' ) );
 
         add_filter( 'the_content' , array($this, 'display') );
     }

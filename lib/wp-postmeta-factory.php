@@ -39,6 +39,9 @@ class WP_PostMetaFactory implements PostMetaFactory {
             case 'textarea':
                 $PostMeta = new WP_TextareaMeta( $key, $options );
                 break;
+            case 'media':
+                $PostMeta = new WP_MediaMeta( $key, $options );
+                break;
             case 'text':
             case 'int':
             default:
