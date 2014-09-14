@@ -156,42 +156,44 @@ class WP_MediaMeta extends WP_PostMeta {
     public function display_input( $post_id ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
-        if ( ! array_key_exists( 'wp-media-postmeta-src', $data ) ) $data = array();
-
-        $this->display_label();
+        if ( ! array_key_exists( 'wp-metabox-media-src', $data ) ) $data = array();
         ?>
-        <p class="hide-if-no-js">
-            <a title="Set Image" href="javascript:;" id="set-wp-media-postmeta-thumbnail">Set Image</a>
-        </p>
+        <div class="wp-metabox-media">
 
-        <div id="wp-media-postmeta-image-container" class="hidden">
-            <img src="<?php echo $data['wp-media-postmeta-src']; ?>" alt="<?php echo $data['wp-media-postmeta-alt']; ?>" title="<?php echo $data['wp-media-postmeta-title']; ?>" />
-        </div><!-- #wp-media-postmeta-image-container -->
+            <?php $this->display_label(); ?>
+            <p class="hide-if-no-js">
+                <a title="Set Image" href="javascript:;" class="set-thumbnail">Set Image</a>
+            </p>
 
-        <p class="hide-if-no-js hidden">
-            <a title="Remove Image" href="javascript:;" id="remove-wp-media-postmeta-thumbnail">Remove Image</a>
-        </p><!-- .hide-if-no-js -->
+            <div class="image-container hidden">
+                <img src="<?php echo $data['wp-metabox-media-src']; ?>" alt="<?php echo $data['wp-metabox-media-alt']; ?>" title="<?php echo $data['wp-metabox-media-title']; ?>" />
+            </div><!-- #wp-metabox-media-image-container -->
 
-        <p id="wp-media-postmeta-image-info">
-            <input type="hidden" id="wp-media-postmeta-src" name="wp-media-postmeta-src" value="<?php echo $data['wp-media-postmeta-src'] ?>" />
-            <input type="hidden" id="wp-media-postmeta-title" name="wp-media-postmeta-title" value="<?php echo $data['wp-media-postmeta-title'] ?>" />
-            <input type="hidden" id="wp-media-postmeta-alt" name="wp-media-postmeta-alt" value="<?php echo $data['wp-media-postmeta-alt'] ?>" />
-        </p><!-- #wp-media-postmeta-image-meta -->
+            <p class="hide-if-no-js hidden">
+                <a title="Remove Image" href="javascript:;" class="remove-thumbnail">Remove Image</a>
+            </p><!-- .hide-if-no-js -->
+
+            <p class="image-info">
+                <input type="hidden" class="src" name="wp-metabox-media-src" value="<?php echo $data['wp-metabox-media-src'] ?>" />
+                <input type="hidden" class="title" name="wp-metabox-media-title" value="<?php echo $data['wp-metabox-media-title'] ?>" />
+                <input type="hidden" class="alt" name="wp-metabox-media-alt" value="<?php echo $data['wp-metabox-media-alt'] ?>" />
+            </p><!-- #wp-metabox-media-image-meta -->
+        </div>
         <?php
     }
 
     public function update( $post_id, $data ) {
         $media = array();
-        if ( isset( $_POST['wp-media-postmeta-src'] ) ) {
-            $media['wp-media-postmeta-src'] = sanitize_text_field( $_POST['wp-media-postmeta-src'] );
+        if ( isset( $_POST['wp-metabox-media-src'] ) ) {
+            $media['wp-metabox-media-src'] = sanitize_text_field( $_POST['wp-metabox-media-src'] );
         }
 
-        if ( isset( $_POST['wp-media-postmeta-title'] ) ) {
-            $media['wp-media-postmeta-title'] = sanitize_text_field( $_POST['wp-media-postmeta-title'] );
+        if ( isset( $_POST['wp-metabox-media-title'] ) ) {
+            $media['wp-metabox-media-title'] = sanitize_text_field( $_POST['wp-metabox-media-title'] );
         }
 
-        if ( isset( $_POST['wp-media-postmeta-alt'] ) ) {
-            $media['wp-media-postmeta-alt'] = sanitize_text_field( $_POST['wp-media-postmeta-alt'] );
+        if ( isset( $_POST['wp-metabox-media-alt'] ) ) {
+            $media['wp-metabox-media-alt'] = sanitize_text_field( $_POST['wp-metabox-media-alt'] );
         }
 
         parent::update( $post_id, $media );
