@@ -18,6 +18,9 @@ class Test_Metabox extends WP_Metabox {
                 )
             )
         );
+        $this->metadata['image_upload'] = $post_meta_factory->create( 'image_upload', array( 'type' => 'media' ) );
+        $this->metadata['second_upload'] = $post_meta_factory->create( 'second_upload', array( 'type' => 'media', 'label' => 'Second Upload' ) );
+
 
         add_filter( 'the_content' , array($this, 'display') );
     }
