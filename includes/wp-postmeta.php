@@ -202,7 +202,7 @@ class WP_MediaMeta extends WP_PostMeta {
     public function enqueue_scripts() {
         wp_enqueue_media();
 
-        wp_enqueue_script( 'wp-metabox-media-js', plugin_dir_url( __FILE__ ) . 'js/media.js', array( 'jquery' ), 'version' );
+        wp_enqueue_script( 'wp-metabox-media-js', plugin_dir_url( dirname( __FILE__ ) ) . 'js/media.js', array( 'jquery' ), 'version' );
 
     }
 }

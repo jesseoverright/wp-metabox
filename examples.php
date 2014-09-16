@@ -1,7 +1,8 @@
 <?php
 
-#include_once( dirname( __FILE__ ) . '/lib/wp-content-types.php' );
-
+/**
+ * Example usage of a custom metabox with several postmeta types included
+ */
 class Test_Metabox extends WP_Metabox {
     public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
         parent::__construct( $post_meta_factory, $options );
@@ -41,9 +42,8 @@ $test = new Test_Metabox( WP_PostMetaFactory::get_instance(), array(
 ));
 
 /**
- * Portfolio Content Type
- * custom content type to define Test Content Types and specific details related to them.
- * uses custom taxonomy, featured images, and custom backend displays.
+ * Custom Content Type
+ * Sample custom content type using WP Metabox to create custom postmeta boxes
  */
 class Test_Content_Type { #extends WP_ContentType {
     var $nonce_action = 'test-content-type';
@@ -83,7 +83,7 @@ class Test_Content_Type { #extends WP_ContentType {
             'posttype' => $this->key
             )
         );
-        $this->metaboxes['project-url'] = new WP_SimpleMetabox( WP_PostMetaFactory::get_instance(), array (
+        $this->metaboxes['project-date'] = new WP_SimpleMetabox( WP_PostMetaFactory::get_instance(), array (
             'name' => 'project-date',
             'label' => 'Project Date',
             'posttype' => $this->key
