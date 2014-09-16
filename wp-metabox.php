@@ -28,7 +28,9 @@
 require_once( plugin_dir_path( __FILE__ ) . '/includes/wp-postmeta.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/includes/wp-postmeta-factory.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/includes/wp-metabox.php' );
-include_once( plugin_dir_path( __FILE__ ) . '/examples.php' );
+
+// include this file for examples of usage
+#include_once( plugin_dir_path( __FILE__ ) . '/examples.php' );
 
 function wp_metabox_init() {
     // load any dependent plugins
