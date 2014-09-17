@@ -7,7 +7,10 @@ class Test_Metabox extends WP_Metabox {
     public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() ) {
         parent::__construct( $key, $post_meta_factory, $options );
 
+        # A basic text box called 'test'
         $this->metadata['test'] = $post_meta_factory->create( 'test' );
+
+        # A select menu with the following options: one, two, three
         $this->metadata['select'] = $post_meta_factory->create(
             'select',
             array(
@@ -19,13 +22,18 @@ class Test_Metabox extends WP_Metabox {
                 )
             )
         );
+
+        # an image upload using the media uploader
         $this->metadata['image_upload'] = $post_meta_factory->create( 'image_upload', array( 'type' => 'media' ) );
+
+        # a second image upload
         $this->metadata['second_upload'] = $post_meta_factory->create( 'second_upload', array( 'type' => 'media', 'label' => 'Second Upload' ) );
 
 
         add_filter( 'the_content' , array($this, 'display') );
     }
 
+    # displays some of the metadata automatically on the content
     public function display( $content ) {
         global $post;
         if (get_post_meta($post->ID, 'test' ,true) != '') {
@@ -35,6 +43,7 @@ class Test_Metabox extends WP_Metabox {
     }
 }
 
+# add the Test_Metabox to the test-content-type content type
 $test = new Test_Metabox( 'test', WP_PostMetaFactory::get_instance(), array(
     'label' => 'Test',
     'posttype' => 'test-content-type',
@@ -44,12 +53,10 @@ $test = new Test_Metabox( 'test', WP_PostMetaFactory::get_instance(), array(
  * Custom Content Type
  * Sample custom content type using WP Metabox to create custom postmeta boxes
  */
-class Test_Content_Type { #extends WP_ContentType {
-    var $nonce_action = 'test-content-type';
+class Test_Content_Type extends WP_ContentType {
 
-    function __construct( $key = 'test-content-type' ) {
-        #parent::__construct( $key );
-        $this->key = $key;
+    function __construct( $key = 'test-content-type', $options = array() ) {
+        parent::__construct( $key, $options );
 
         register_post_type( $this->key , array(
             'labels' => array(
@@ -76,11 +83,14 @@ class Test_Content_Type { #extends WP_ContentType {
             'rewrite' => array('with_front' => false, 'slug' => 'test')
         ));
 
+        # creates a simple metabox with one text area using WP_SimpleMetabox
         $this->metaboxes['project-url'] = new WP_SimpleMetabox( 'project-url', WP_PostMetaFactory::get_instance(), array (
             'label' => 'Project URL',
             'posttype' => $this->key
             )
         );
+
+        # create another simple metabox with one text area using WP_SimpleMetabox
         $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', WP_PostMetaFactory::get_instance(), array (
             'label' => 'Project Date',
             'posttype' => $this->key
