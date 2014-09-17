@@ -4,8 +4,8 @@
  * Example usage of a custom metabox with several postmeta types included
  */
 class Test_Metabox extends WP_Metabox {
-    public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
-        parent::__construct( $post_meta_factory, $options );
+    public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() ) {
+        parent::__construct( $key, $post_meta_factory, $options );
 
         $this->metadata['test'] = $post_meta_factory->create( 'test' );
         $this->metadata['select'] = $post_meta_factory->create(
@@ -35,8 +35,7 @@ class Test_Metabox extends WP_Metabox {
     }
 }
 
-$test = new Test_Metabox( WP_PostMetaFactory::get_instance(), array(
-    'name' => 'test',
+$test = new Test_Metabox( 'test', WP_PostMetaFactory::get_instance(), array(
     'label' => 'Test',
     'posttype' => 'test-content-type',
 ));
@@ -77,14 +76,12 @@ class Test_Content_Type { #extends WP_ContentType {
             'rewrite' => array('with_front' => false, 'slug' => 'test')
         ));
 
-        $this->metaboxes['project-url'] = new WP_SimpleMetabox( WP_PostMetaFactory::get_instance(), array (
-            'name' => 'project-url',
+        $this->metaboxes['project-url'] = new WP_SimpleMetabox( 'project-url', WP_PostMetaFactory::get_instance(), array (
             'label' => 'Project URL',
             'posttype' => $this->key
             )
         );
-        $this->metaboxes['project-date'] = new WP_SimpleMetabox( WP_PostMetaFactory::get_instance(), array (
-            'name' => 'project-date',
+        $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', WP_PostMetaFactory::get_instance(), array (
             'label' => 'Project Date',
             'posttype' => $this->key
             )
