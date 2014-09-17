@@ -5,7 +5,7 @@ if ( ! interface_exists( 'Metabox' ) ) {
         /**
          * Constructor
          */
-        public function __construct( PostMetaFactory $post_meta_factory, $options = array() );
+        public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() );
 
         /**
          * Adds the metabox
@@ -26,10 +26,10 @@ if ( ! interface_exists( 'Metabox' ) ) {
 
 class WP_Metabox implements Metabox {
     /**
-     * Name of the metabox
+     * Key of the metabox
      * @var string
      */
-    protected $name;
+    protected $key;
 
     /**
      * Metadata for this metabox
@@ -60,13 +60,14 @@ class WP_Metabox implements Metabox {
 
     /**
      * Constructor
+     * @param  string key for this metabox
      * @param PostMetaFactory $post_meta_factory PostMeta factory dependency
      * @param array           $options           
      */
-    public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
+    public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() ) {
         $this->_post_meta_factory = $post_meta_factory;
 
-        $this->name = $options['name'];
+        $this->key = $key;
         $this->label = $options['label'];
         if ( $options['posttype'] ) $this->posttype = $options['posttype']; else $this->posttype = 'post';
 
@@ -79,7 +80,7 @@ class WP_Metabox implements Metabox {
      * Adds the metabox to the WP admin
      */
     public function add_metabox() {
-        add_meta_box( $this->name, $this->label, array( $this, 'display_metabox' ), $this->posttype, 'normal', 'high');
+        add_meta_box( $this->key, $this->label, array( $this, 'display_metabox' ), $this->posttype, 'normal', 'high');
     }
 
     /**
@@ -89,7 +90,7 @@ class WP_Metabox implements Metabox {
     public function display_metabox() {
         global $post;
 
-        echo "<input type=\"hidden\" name=\"{$this->name}_nonce\" id=\"{$this->name}_nonce\" value=\"" . wp_create_nonce( $this->name . '_save' ) . "\" />"; 
+        echo "<input type=\"hidden\" name=\"{$this->key}_nonce\" id=\"{$this->key}_nonce\" value=\"" . wp_create_nonce( $this->key . '_save' ) . "\" />"; 
 
         foreach ( $this->metadata as $key => $meta ) {
             $meta->display_input( $post->ID );
@@ -102,7 +103,7 @@ class WP_Metabox implements Metabox {
      * @return bool          false or save
      */
     public function save( $post_id ) {    
-        if ( !wp_verify_nonce( $_POST[ $this->name . '_nonce'], $this->name . '_save' ) )
+        if ( !wp_verify_nonce( $_POST[ $this->key . '_nonce'], $this->key . '_save' ) )
             return false;
 
         if ( !current_user_can( 'edit_post', $post_id )) {
@@ -120,15 +121,16 @@ class WP_Metabox implements Metabox {
 class WP_SimpleMetabox extends WP_Metabox {
     /**
      * Constructor
+     * @param  string key for this metabox
      * @param PostMetaFactory $post_meta_factory PostMeta factory dependency
      * @param array           $options           
      */
-    public function __construct( PostMetaFactory $post_meta_factory, $options = array() ) {
-        parent::__construct( $post_meta_factory, $options );
+    public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() ) {
+        parent::__construct( $key, $post_meta_factory, $options );
 
         // hide the metaboxes label
         $options['label'] = 'none';
-        $this->metadata[ $this->name ] = $this->_post_meta_factory->create( $this->name, $options );
+        $this->metadata[ $this->key ] = $this->_post_meta_factory->create( $this->key, $options );
     }
 
 }
