@@ -2,29 +2,64 @@
 
 if ( ! interface_exists( 'PostMeta' ) ) {
     interface PostMeta {
-
+        /**
+         * Constructor
+         */
         public function __construct( $key, $options = array() );
 
+        /**
+         * Displays the input for this metabox
+         */
         public function display_input( $post_id );
 
+        /**
+         * Updates post meta for individual post
+         */
         public function update( $post_id, $data );
     }
 }
 
 class WP_PostMeta implements PostMeta {
-
+    /**
+     * Post meta key
+     * @var string
+     */
     protected $key;
+
+    /**
+     * Label of meta data in admin
+     * @var string
+     */
     protected $label;
+
+    /**
+     * Maximum length of content
+     * @var integer
+     */
     protected $max_length = 40;
 
+    /**
+     * Input type for this metadata
+     * @var string
+     */
     protected $input_type = 'text';
 
+    /**
+     * Constructor
+     * @param string $key     key for this post meta
+     * @param array  $options
+     */
     public function __construct($key, $options = array() ) {
         $this->key = $key;
         if ( $options['label'] ) $this->label = $options['label']; else $this->label = $this->key;
         if ( $options['label'] == 'none' ) $this->label = '';
     }
 
+    /**
+     * Displays the input in the WP admin
+     * @param  int $post_id  individual post id
+     * @return html          input content
+     */
     public function display_input( $post_id, $data = false ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
@@ -37,6 +72,11 @@ class WP_PostMeta implements PostMeta {
         echo "</p>";
     }
 
+    /**
+     * Updates post meta for a post in WP database
+     * @param  int $post_id individual post id
+     * @param  $data    content
+     */
     public function update( $post_id, $data ) {
 
         if ( get_post_meta($post_id, $this->key) == '') {
@@ -51,6 +91,10 @@ class WP_PostMeta implements PostMeta {
 
     }
 
+    /**
+     * Displays the label in the admin area
+     * @return html label 
+     */
     protected function display_label() {
         if ( $this->label ) {
             echo "<label for=\"{$this->key}\">{$this->label}</label>";
@@ -60,6 +104,10 @@ class WP_PostMeta implements PostMeta {
 }
 
 class WP_TextMeta extends WP_PostMeta {
+    /**
+     * Max length of textbox
+     * @var integer
+     */
     protected $max_length = 255;
 
     // add basic text validation
@@ -67,12 +115,22 @@ class WP_TextMeta extends WP_PostMeta {
 
 class WP_URLMeta extends WP_TextMeta {
 
+    /**
+     * Sanitizes and displays metabox input
+     * @param  int $post_id WordPress post id
+     * @return html          input content
+     */
     public function display_input( $post_id ) {
         $data = esc_url( get_post_meta( $post_id, $this->key, true ) );
 
         parent::display_input( $post_id, $data );
     }
 
+    /**
+     * Sanitizes URL and saves to database
+     * @param  int $post_id WordPress post id
+     * @param  url $data    content
+     */
     public function update( $post_id, $data ) {
         $data = esc_url_raw( $_POST[ $this->key ] );
 
@@ -85,19 +143,37 @@ class WP_ArrayMeta extends WP_PostMeta {
 }
 
 class WP_SelectMeta extends WP_PostMeta {
+    /**
+     * Select input type
+     * @var string
+     */
     protected $input_type = 'select';
-    protected $choices;
 
+    /**
+     * Choices available for select options
+     *  ex. $choices['database_value'] = 'label'
+     * @var array
+     */
+    protected $choices = array();
+
+    /**
+     * Constructor
+     * @param string $key     key for this post meta
+     * @param array  $options
+     */
     public function __construct( $key, $options = array() ) {
-        
-        $this->choices = array();
-        
+                
         if ( $options['choices'] ) $this->choices = $options['choices'];
 
         parent::__construct( $key, $options );
 
     }
 
+    /**
+     * Displays the select statement in the WP admin
+     * @param  int $post_id  individual post id
+     * @return html          input content
+     */
     public function display_input( $post_id, $data = false ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
 
@@ -122,6 +198,11 @@ class WP_SelectMeta extends WP_PostMeta {
         echo "</p>";
     }
 
+    /**
+     * Validates on select choices and updates post meta for a post in WP database
+     * @param  int $post_id individual post id
+     * @param  $data    content
+     */
     public function update( $post_id, $data ) {
 
         if ( array_key_exists( $data, $this->choices ) ) $data = $data; else $data = '';
@@ -134,6 +215,11 @@ class WP_SelectMeta extends WP_PostMeta {
 class WP_TextareaMeta extends WP_PostMeta {
     protected $input_type = 'textarea';
 
+    /**
+     * Displays the textarea in the WP admin
+     * @param  int $post_id  individual post id
+     * @return html          input content
+     */
     public function display_input( $post_id, $data = false ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
@@ -147,12 +233,24 @@ class WP_TextareaMeta extends WP_PostMeta {
 class WP_MediaMeta extends WP_PostMeta {
     protected $input_type = 'media';
 
+    /**
+     * Constructor
+     *
+     * Enqueues required javascript for media upload
+     * @param string $key     key for this post meta
+     * @param array  $options
+     */
     public function __construct( $key, $options = array() ) {
         parent::__construct( $key, $options );
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
 
+    /**
+     * Displays the media upload in the WP admin
+     * @param  int $post_id  individual post id
+     * @return html          input content
+     */
     public function display_input( $post_id ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
@@ -182,6 +280,11 @@ class WP_MediaMeta extends WP_PostMeta {
         <?php
     }
 
+    /**
+     * Updates post meta for a post in WP database as a single array
+     * @param  int $post_id individual post id
+     * @param  $data    content
+     */
     public function update( $post_id, $data ) {
         $media = array();
         if ( isset( $_POST[ $this->key . '-src' ] ) ) {
@@ -199,6 +302,9 @@ class WP_MediaMeta extends WP_PostMeta {
         parent::update( $post_id, $media );
     }
 
+    /**
+     * Enqueues wordpress media uploader and custom script
+     */
     public function enqueue_scripts() {
         wp_enqueue_media();
 
