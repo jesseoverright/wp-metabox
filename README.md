@@ -28,7 +28,14 @@ Check out `examples.php` for examples of creating custom postmeta input, custom 
 ### Sample Usage
 
     # creates a simple metabox on posts
-    $foo = new WP_SimpleMetabox( 'custom-metabox', WP_PostMetaFactory::get_instance(), array ( 'label' => 'Custom Metabox', 'posttype' => 'post' ) );
+    $foo = new WP_SimpleMetabox(
+        'custom-metabox',
+        WP_PostMetaFactory::get_instance(),
+        array(
+            'label' => 'Custom Metabox',
+            'posttype' => 'post'
+        )
+    );
 
 ## Custom Content Types
 
