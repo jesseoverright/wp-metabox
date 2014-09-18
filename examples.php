@@ -44,10 +44,14 @@ class Test_Metabox extends WP_Metabox {
 }
 
 # add the Test_Metabox to the test-content-type content type
-$test = new Test_Metabox( 'test', WP_PostMetaFactory::get_instance(), array(
-    'label' => 'Test',
-    'posttype' => 'test-content-type',
-));
+$test = new Test_Metabox(
+    'test',
+    WP_PostMetaFactory::get_instance(),
+    array(
+        'label' => 'Test',
+        'posttype' => 'test-content-type',
+    )
+);
 
 /**
  * Custom Content Type
@@ -83,14 +87,15 @@ class Test_Content_Type extends WP_ContentType {
             'rewrite' => array('with_front' => false, 'slug' => 'test')
         ));
 
-        # creates a simple metabox with one text area using WP_SimpleMetabox
+        # creates a simple metabox with one url input using WP_SimpleMetabox
         $this->metaboxes['project-url'] = new WP_SimpleMetabox( 'project-url', WP_PostMetaFactory::get_instance(), array (
             'label' => 'Project URL',
+            'type' => 'url',
             'posttype' => $this->key
             )
         );
 
-        # create another simple metabox with one text area using WP_SimpleMetabox
+        # create another simple metabox with one text input using WP_SimpleMetabox
         $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', WP_PostMetaFactory::get_instance(), array (
             'label' => 'Project Date',
             'posttype' => $this->key
