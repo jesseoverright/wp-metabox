@@ -49,7 +49,13 @@ class WP_Metabox implements Metabox {
      * Post types associated with this metabox
      * @var string or array
      */
-    protected $posttype;
+    protected $posttype = 'post';
+
+    /**
+     * context of metabox in admin area
+     * @var string
+     */
+    protected $context = 'normal';
 
     /**
      * The Post Meta Factory object to create post meta types
@@ -69,7 +75,8 @@ class WP_Metabox implements Metabox {
 
         $this->key = $key;
         $this->label = $options['label'];
-        if ( $options['posttype'] ) $this->posttype = $options['posttype']; else $this->posttype = 'post';
+        if ( $options['posttype'] ) $this->posttype = $options['posttype'];
+        if ( $options['context'] ) $this->context = $options['context'];
 
         add_action( 'admin_init', array( $this, 'add_metabox' ) );
         add_action( 'save_post', array( $this, 'save' ) );
@@ -80,7 +87,7 @@ class WP_Metabox implements Metabox {
      * Adds the metabox to the WP admin
      */
     public function add_metabox() {
-        add_meta_box( $this->key, $this->label, array( $this, 'display_metabox' ), $this->posttype, 'normal', 'high');
+        add_meta_box( $this->key, $this->label, array( $this, 'display_metabox' ), $this->posttype, $this->context, 'high');
     }
 
     /**
