@@ -57,8 +57,21 @@ class WP_PostMeta implements PostMeta {
      */
     public function __construct($key, $options = array() ) {
         $this->key = $key;
-        if ( $options['label'] ) $this->label = $options['label']; else $this->label = $this->key;
-        if ( $options['label'] == 'none' ) $this->label = '';
+
+        if ( $options['label'] ) {
+            $this->label = $options['label'];
+        } else {
+            $this->label = $this->key;
+        }
+
+        if ( $options['hidelabel'] ) {
+            $this->hidelabel = true;
+        }
+
+        if ( $options['max_length'] ) {
+            $this->max_length = $options['max_length'];
+        }
+
         $this->description = $options['description'];
     }
 
@@ -101,7 +114,12 @@ class WP_PostMeta implements PostMeta {
     }
 
     protected function display_input( $data ) {
-        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"widefat\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\">";
+        // limit input depending on max length
+        if ( $this->max_length < 100 ) {
+            $style = ' style="max-width: ' . ( 10 * $this->max_length ) . 'px"';
+        }
+
+        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"widefat wp-metabox-input\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\"{$style}>";
     }
 
     /**
@@ -109,9 +127,11 @@ class WP_PostMeta implements PostMeta {
      * @return html label 
      */
     protected function display_label() {
-        if ( $this->label ) {
-            echo "<label for=\"{$this->key}\">{$this->label}</label>";
+        if ( $this->hidelabel ) {
+            $hide = 'class="screen-reader-text "';
         }
+
+        echo "<label {$hide}for=\"{$this->key}\">{$this->label}</label>";
     }
 
     /**
@@ -134,6 +154,10 @@ class WP_TextMeta extends WP_PostMeta {
     protected $max_length = 255;
 
     // add basic text validation
+}
+
+class WP_NumberMeta extends WP_PostMeta {
+    protected $input_type = 'number';
 }
 
 class WP_URLMeta extends WP_TextMeta {

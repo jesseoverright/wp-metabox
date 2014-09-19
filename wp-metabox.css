@@ -1,9 +1,13 @@
-.wp-metabox-media .image-container img {
-    max-width: 100%;
+.wp-metabox-input {
+    display: block;
 }
 
 .wp-metabox-description {
     margin-top: 3px;
     color: #999;
     font-style: italic;
+}
+
+.wp-metabox-media .image-container img {
+    max-width: 100%;
 }

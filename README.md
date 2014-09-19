@@ -10,8 +10,9 @@ Check out `examples.php` for examples of creating custom postmeta input, custom 
 
 - Text input
 - URL sanitized text
+- numbers
 - dropdowns
-- Textareas
+- textareas
 - Image upload (using the WordPress Media Uploader)
 
 ### Sample Usage

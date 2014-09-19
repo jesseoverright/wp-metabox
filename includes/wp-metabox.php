@@ -129,7 +129,7 @@ class WP_SimpleMetabox extends WP_Metabox {
         parent::__construct( $key, $post_meta_factory, $options );
 
         // hide the metaboxes label
-        $options['label'] = 'none';
+        $options['hidelabel'] = true;
         $this->metadata[ $this->key ] = $this->_post_meta_factory->create( $this->key, $options );
     }
 

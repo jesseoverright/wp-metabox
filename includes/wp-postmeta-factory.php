@@ -66,10 +66,14 @@ class WP_PostMetaFactory implements PostMetaFactory {
                 $PostMeta = new WP_TextareaMeta( $key, $options );
                 break;
             case 'media':
+            case 'image':
                 $PostMeta = new WP_MediaMeta( $key, $options );
                 break;
-            case 'text':
             case 'int':
+            case 'number':
+                $PostMeta = new WP_NumberMeta( $key, $options );
+                break;
+            case 'text':
             default:
                 $PostMeta = new WP_TextMeta( $key, $options );
         }
