@@ -19,6 +19,9 @@ Check out `examples.php` for examples of creating custom postmeta input, custom 
         # creates a new post meta type named 'custom-post-meta'
         $foo = new WP_PostMeta( 'custom-post-meta', array( 'type' => 'text' );
 
+        # displays post meta in your theme template file
+        get_post_meta( $post_id, 'custom-post-meta', true);
+
 ## Custom Metaboxes
 
 `WP_SimpleMetabox` can be used to create metaboxes with one post meta type.
