@@ -116,7 +116,7 @@ class WP_PostMeta implements PostMeta {
     protected function display_input( $data ) {
         // limit input depending on max length
         if ( $this->max_length < 100 ) {
-            $style = ' style="max-width: ' . ( 10 * $this->max_length ) . 'px"';
+            $style = ' style="max-width: ' . ( ( 10 * $this->max_length ) - 20 ) . 'px"';
         }
 
         echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"widefat wp-metabox-input\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\"{$style}>";
@@ -204,7 +204,7 @@ class WP_SelectMeta extends WP_PostMeta {
     protected $choices = array();
 
     /**
-     * Constructor
+     * Constructor adds choices option
      * @param string $key     key for this post meta
      * @param array  $options
      */
@@ -252,7 +252,29 @@ class WP_SelectMeta extends WP_PostMeta {
 }
 
 class WP_TextareaMeta extends WP_PostMeta {
+    /**
+     * Textarea input type
+     * @var string
+     */
     protected $input_type = 'textarea';
+
+    /**
+     * Number of rows for textarea
+     * @var integer
+     */
+    protected $rows = 2;
+
+    /**
+     * Constructor adds height option
+     * @param string $key     key for this post meta
+     * @param array  $options
+     */
+    public function __construct( $key, $options = array() ) {
+        if ( $options['rows'] ) $this->rows = $options['rows'];
+
+        parent::__construct( $key, $options );
+
+    }
 
     /**
      * Displays the textarea in the WP admin
@@ -260,7 +282,7 @@ class WP_TextareaMeta extends WP_PostMeta {
      * @return html          input content
      */
     protected function display_input( $data ) {
-        echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" class=\"widefat\">{$data}</textarea>";
+        echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" class=\"widefat\" rows=\"{$this->rows}\">{$data}</textarea>";
     }
 
 }
