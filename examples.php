@@ -3,7 +3,7 @@
 /**
  * Example usage of a custom metabox with several postmeta types included
  */
-class Test_Metabox extends WP_Metabox {
+class Example_Metabox extends WP_Metabox {
     public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() ) {
         parent::__construct( $key, $post_meta_factory, $options );
 
@@ -43,49 +43,26 @@ class Test_Metabox extends WP_Metabox {
     }
 }
 
-# add the Test_Metabox to the test-content-type content type
-$test = new Test_Metabox(
+# add the Example_Metabox to the example-content-type content type
+$example = new Example_Metabox(
     'test',
     WP_PostMetaFactory::get_instance(),
     array(
-        'label' => 'Test',
-        'posttype' => 'test-content-type',
+        'label' => 'Example Metabox',
+        'posttype' => 'example-content-type',
     )
 );
 
 /**
- * Custom Content Type
- * Sample custom content type using WP Metabox to create custom postmeta boxes
+ * Example Custom Content Type
+ * Creates a sample custom content type using WP Metabox to create custom postmeta boxes
  */
-class Test_Content_Type extends WP_ContentType {
+class Example_Content_Type extends WP_ContentType {
 
-    function __construct( $key = 'test-content-type', $options = array() ) {
+    function __construct( $key = 'example-content-type', $options = array( 'singular' => 'Content Type') ) {
+
+        # registers the post type with provided options
         parent::__construct( $key, $options );
-
-        register_post_type( $this->key , array(
-            'labels' => array(
-                'name' => __( 'Test'),
-                'singular_name' => __( 'Test Content Type' ),
-                'add_new' => __( 'Add New' ),
-                'add_new_item' => __( 'Add New Test Content Type' ),
-                'edit' => __( 'Edit' ),
-                'edit_item' => __( 'Edit Test Content Type' ),
-                'new_item' => __( 'New Test Content Type' ),
-                'view' => __( 'View' ),
-                'view_item' => __( 'View Test Content Type' ),
-                'search_items' => __('Search Test' ),
-                'not_found' => __( 'No Test Content Types found' ),
-                'not_found_in_trash' => __( 'No test items found in Trash' ),
-            ),
-            'description' => 'Test content types',
-            'public' => true,
-            '_builtin' => false,
-            'menu_position' => 5,
-            'menu_icon' => 'dashicons-portfolio',
-            'supports' => array('title', 'editor', 'revisions', 'thumbnail'),
-            'show_in_nav_menus' => true,
-            'rewrite' => array('with_front' => false, 'slug' => 'test')
-        ));
 
         # creates a simple metabox with one url input using WP_SimpleMetabox
         $this->metaboxes['project-url'] = new WP_SimpleMetabox( 'project-url', WP_PostMetaFactory::get_instance(), array (
@@ -106,9 +83,10 @@ class Test_Content_Type extends WP_ContentType {
 
 }
 
-function init_test_content_type() {
-    global $test_content_type;
-    $test_content_type = new Test_Content_Type();
+function init_example_content_type() {
+    global $example_content_type;
+    $example_content_type = new Example_Content_Type();
+    $foo = new WP_ContentType( 'key', array( 'singular' => 'Content Type Name' ) );
 }
 
-add_action( 'init', 'init_test_content_type');
+add_action( 'init', 'init_example_content_type');

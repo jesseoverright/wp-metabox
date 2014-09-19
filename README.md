@@ -42,4 +42,9 @@ Check out `examples.php` for examples of creating custom postmeta input, custom 
 
 ## Custom Content Types
 
-`WP_ContentType` has a few helpers for creating custom content types.
+`WP_ContentType` has helps create custom content types. It will register the post type using some default options and can be overridden as necessary.
+
+### Sample Usage
+
+    # creates a basic custom content type
+    $foo = new WP_ContentType( 'foo' , array( 'singular' => 'Content Type Name' ) );
