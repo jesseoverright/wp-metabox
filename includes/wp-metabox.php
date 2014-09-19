@@ -93,7 +93,7 @@ class WP_Metabox implements Metabox {
         echo "<input type=\"hidden\" name=\"{$this->key}_nonce\" id=\"{$this->key}_nonce\" value=\"" . wp_create_nonce( $this->key . '_save' ) . "\" />"; 
 
         foreach ( $this->metadata as $key => $meta ) {
-            $meta->display_input( $post->ID );
+            $meta->display_postmeta( $post->ID );
         }
     }
 

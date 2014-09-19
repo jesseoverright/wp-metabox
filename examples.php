@@ -86,7 +86,6 @@ class Example_Content_Type extends WP_ContentType {
 function init_example_content_type() {
     global $example_content_type;
     $example_content_type = new Example_Content_Type();
-    $foo = new WP_ContentType( 'key', array( 'singular' => 'Content Type Name' ) );
 }
 
 add_action( 'init', 'init_example_content_type');

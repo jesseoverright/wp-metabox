@@ -8,9 +8,9 @@ if ( ! interface_exists( 'PostMeta' ) ) {
         public function __construct( $key, $options = array() );
 
         /**
-         * Displays the input for this metabox
+         * Displays the postmeta input
          */
-        public function display_input( $post_id );
+        public function display_postmeta( $post_id );
 
         /**
          * Updates post meta for individual post
@@ -33,13 +33,19 @@ class WP_PostMeta implements PostMeta {
     protected $label;
 
     /**
+     * A description of the postmeta for the WordPress admin
+     * @var string
+     */
+    protected $description;
+
+    /**
      * Maximum length of content
      * @var integer
      */
     protected $max_length = 40;
 
     /**
-     * Input type for this metadata
+     * Input type for this post meta
      * @var string
      */
     protected $input_type = 'text';
@@ -53,21 +59,24 @@ class WP_PostMeta implements PostMeta {
         $this->key = $key;
         if ( $options['label'] ) $this->label = $options['label']; else $this->label = $this->key;
         if ( $options['label'] == 'none' ) $this->label = '';
+        $this->description = $options['description'];
     }
 
     /**
-     * Displays the input in the WP admin
+     * Displays the post meta input in the WP admin
      * @param  int $post_id  individual post id
      * @return html          input content
      */
-    public function display_input( $post_id, $data = false ) {
+    public function display_postmeta( $post_id, $data = false ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
-        echo "</p>";
+        echo "<p>";
 
         $this->display_label();
         
-        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"widefat\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\">";
+        $this->display_input( $data );
+
+        $this->display_description();
 
         echo "</p>";
     }
@@ -91,6 +100,10 @@ class WP_PostMeta implements PostMeta {
 
     }
 
+    protected function display_input( $data ) {
+        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"widefat\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\">";
+    }
+
     /**
      * Displays the label in the admin area
      * @return html label 
@@ -98,6 +111,16 @@ class WP_PostMeta implements PostMeta {
     protected function display_label() {
         if ( $this->label ) {
             echo "<label for=\"{$this->key}\">{$this->label}</label>";
+        }
+    }
+
+    /**
+     * Displays the description of this postmeta in the admin area
+     * @return html description
+     */
+    protected function display_description() {
+        if ( $this->description ) {
+            echo "<span class=\"wp-metabox-description\">{$this->description}</span>";
         }
     }
 
@@ -116,11 +139,11 @@ class WP_TextMeta extends WP_PostMeta {
 class WP_URLMeta extends WP_TextMeta {
 
     /**
-     * Sanitizes and displays metabox input
+     * Sanitizes and displays postmeta input
      * @param  int $post_id WordPress post id
      * @return html          input content
      */
-    public function display_input( $post_id ) {
+    protected function display_input( $post_id ) {
         $data = esc_url( get_post_meta( $post_id, $this->key, true ) );
 
         parent::display_input( $post_id, $data );
@@ -174,16 +197,9 @@ class WP_SelectMeta extends WP_PostMeta {
      * @param  int $post_id  individual post id
      * @return html          input content
      */
-    public function display_input( $post_id, $data = false ) {
-        if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
+    protected function display_input( $data ) {
 
-        echo "<p>";
-
-        $this->display_label();
-
-        echo "<br />";
-
-        echo "<select id=\"{$this->key}\" name=\"{$this->key}\">";
+        echo "<br><select id=\"{$this->key}\" name=\"{$this->key}\">";
 
         foreach ( $this->choices as $value => $label ) {
             echo "<option value=\"{$value}\"";
@@ -195,7 +211,6 @@ class WP_SelectMeta extends WP_PostMeta {
 
         echo "</select>";
 
-        echo "</p>";
     }
 
     /**
@@ -220,11 +235,7 @@ class WP_TextareaMeta extends WP_PostMeta {
      * @param  int $post_id  individual post id
      * @return html          input content
      */
-    public function display_input( $post_id, $data = false ) {
-        if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
-        
-        $this->display_label();
-
+    protected function display_input( $post_id, $data = false ) {
         echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" class=\"widefat\">{$data}</textarea>";
     }
 
@@ -251,7 +262,7 @@ class WP_MediaMeta extends WP_PostMeta {
      * @param  int $post_id  individual post id
      * @return html          input content
      */
-    public function display_input( $post_id ) {
+    public function display_postmeta( $post_id ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
         if ( ! is_array( $data ) ) $data = array();
