@@ -167,10 +167,10 @@ class WP_URLMeta extends WP_TextMeta {
      * @param  int $post_id WordPress post id
      * @return html          input content
      */
-    protected function display_input( $post_id ) {
+    public function display_postmeta( $post_id, $data = false ) {
         $data = esc_url( get_post_meta( $post_id, $this->key, true ) );
 
-        parent::display_input( $post_id, $data );
+        parent::display_postmeta( $post_id, $data );
     }
 
     /**
@@ -259,7 +259,7 @@ class WP_TextareaMeta extends WP_PostMeta {
      * @param  int $post_id  individual post id
      * @return html          input content
      */
-    protected function display_input( $post_id, $data = false ) {
+    protected function display_input( $data ) {
         echo "<textarea id=\"{$this->key}\" name=\"{$this->key}\" class=\"widefat\">{$data}</textarea>";
     }
 
