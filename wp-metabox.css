@@ -8,6 +8,11 @@
     font-style: italic;
 }
 
+.wp-metabox-ordered-item {
+    border: 1px dotted #999;
+    padding: 5px;
+}
+
 .wp-metabox-media .image-container img {
     max-width: 100%;
 }

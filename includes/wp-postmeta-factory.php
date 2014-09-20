@@ -69,6 +69,10 @@ class WP_PostMetaFactory implements PostMetaFactory {
             case 'image':
                 $PostMeta = new WP_MediaMeta( $key, $options );
                 break;
+            case 'ordered':
+            case 'ordered-list':
+                $PostMeta = new WP_OrderedListMeta( $key, $options );
+                break;
             case 'int':
             case 'number':
                 $PostMeta = new WP_NumberMeta( $key, $options );

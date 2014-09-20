@@ -79,6 +79,13 @@ class Example_Content_Type extends WP_ContentType {
             )
         );
 
+        $this->metaboxes['ordered-list'] = new WP_SimpleMetabox( 'ordered-list', WP_PostMetaFactory::get_instance(), array (
+            'label' => 'Ordered List',
+            'posttype' => $this->key,
+            'type' => 'ordered-list'
+            )
+        );
+
     }
 
 }
