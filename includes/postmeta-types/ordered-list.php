@@ -28,9 +28,7 @@ class WP_OrderedListMeta extends WP_PostMeta {
 
         $this->display_label();
 
-        echo "</p>";
-        
-        echo "<ul class=\"wp-metabox-ordered-list\">";
+        echo "</p><ul class=\"wp-metabox-ordered-list\">";
 
         foreach ( $data as $value ) {
             $this->display_input( $value );

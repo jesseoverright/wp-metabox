@@ -19,7 +19,8 @@ Check out `examples.php` for examples of creating custom postmeta input, custom 
 - numbers
 - dropdowns
 - textareas
-- Image upload (using the WordPress Media Uploader)
+- media & images (using the WordPress media uploader)
+- ordered lists
 
 ## Custom Metaboxes
 

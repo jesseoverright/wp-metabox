@@ -5,6 +5,7 @@
 
         $( '.wp-metabox-ordered-list' ).sortable();
 
+        /* clone the last input without data */
         $( '.wp-metabox-add-new' ).on( 'click', function( event ) {
             event.preventDefault();
 
@@ -13,6 +14,7 @@
             input_item.clone().insertAfter( input_item ).find('input').val('');
         });
 
+        /* remove selected item */
         $( '.wp-metabox-remove' ).on( 'click', function( event ) {
             event.preventDefault();
 

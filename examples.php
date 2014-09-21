@@ -72,13 +72,14 @@ class Example_Content_Type extends WP_ContentType {
             )
         );
 
-        # create another simple metabox with one text input using WP_SimpleMetabox
+        # creates another simple metabox with one text input using WP_SimpleMetabox
         $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', WP_PostMetaFactory::get_instance(), array (
             'label' => 'Project Date',
             'posttype' => $this->key
             )
         );
 
+        # creates a simple metabox with an ordered list
         $this->metaboxes['ordered-list'] = new WP_SimpleMetabox( 'ordered-list', WP_PostMetaFactory::get_instance(), array (
             'label' => 'Ordered List',
             'posttype' => $this->key,
