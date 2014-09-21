@@ -87,8 +87,73 @@ class Example_Content_Type extends WP_ContentType {
             )
         );
 
+        WP_PostMetaFactory::get_instance()->register_posttype( 'custom-ordered', 'OrderedMedia' );
+
+        # creates a simple metabox with an ordered list
+        $this->metaboxes['custom-ordered'] = new WP_SimpleMetabox( 'custom-ordered', WP_PostMetaFactory::get_instance(), array (
+            'label' => 'Ordered Multi Text Inputs',
+            'posttype' => $this->key,
+            'type' => 'custom-ordered'
+            )
+        );
+
     }
 
+}
+
+# Example customized ordered list with two text areas
+class OrderedMedia extends WP_OrderedListMeta {
+    public function display_postmeta( $post_id ) {
+        if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
+
+        $test = $data[ 'first' ];
+        $next = $data[ 'next' ];
+
+        $test[] = '';
+        
+        echo "<p>";
+
+        $this->display_label();
+
+        echo "</p><ul class=\"wp-metabox-ordered-list\">";
+
+        foreach ( $test as $key => $value ) {
+            $data[ $this->key ][ 'first' ] = $value;
+            $data[ $this->key ][ 'next' ] = $next[ $key ];
+            $this->display_item( $data );
+        }
+
+        echo "</ul><p>";
+
+        echo "<button class=\"button button-large wp-metabox-add-new\">Add New</button>";
+
+        $this->display_description();
+
+        echo "</p>";
+
+    }
+
+    protected function display_input( $data ) {
+
+        if ( ! is_array( $data ) ) $data = array();
+
+        echo "<input type=\"{$this->input_type}\" class=\"wp-metabox-input\" name=\"{$this->key}[first][]\" value=\"{$data[$this->key]['first']}\" maxlength=\"{$this->max_length}\">";
+
+        echo "<input type=\"{$this->input_type}\" class=\"wp-metabox-input\" name=\"{$this->key}[next][]\" value=\"{$data[$this->key]['next']}\" maxlength=\"{$this->max_length}\">";
+
+    }
+
+    public function update( $post_id, $data ) {
+
+        foreach ( $data[ $this->key . '-first' ] as $key => $value ) {
+            if ( $value == '' && $data[ $this->key . '-next' ][$key] == '' ) {
+                unset( $data[$this->key . '-first' ][$key] );
+                unset( $data[$this->key . '-next' ][$key] );
+            }
+        }
+        
+        parent::update( $post_id, $data );
+    }
 }
 
 function init_example_content_type() {

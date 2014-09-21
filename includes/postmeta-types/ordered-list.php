@@ -51,7 +51,9 @@ class WP_OrderedListMeta extends WP_PostMeta {
      */
     protected function display_item( $data ) {
         echo "<li class=\"wp-metabox-ordered-item\">";
+
         $this->display_input( $data );
+
         echo "<button class=\"button wp-metabox-remove\">remove</button></li>";
     }
 
