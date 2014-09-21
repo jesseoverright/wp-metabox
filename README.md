@@ -24,7 +24,7 @@ WP-Metabox can be used to create and extend custom postmeta types, custom metabo
 
 ## Custom Metaboxes
 
-    # creates a simple metabox on posts
+    # creates a simple metabox on posts of ordered lists
     $foo = new WP_SimpleMetabox(
         'custom-metabox',
         WP_PostMetaFactory::get_instance(),
