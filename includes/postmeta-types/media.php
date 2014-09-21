@@ -37,13 +37,8 @@ class WP_MediaMeta extends WP_PostMeta {
             </p>
 
             <div class="image-container hidden">
-                <?php
-                if ( $this->get_post_meta( $post_id, $this->key ) ) {
-                    echo $this->get_post_meta( $post_id, $this->key );
-                } else {
-                    echo "<img src=\"\" alt=\"\" title=\"\" />";
-                }
-                ?>
+                <img src="<?php echo $data[0]['src']; ?>" alt="<?php echo $data[0]['alt']; ?>" title="<?php echo $data[0]['title']; ?>" />
+
             </div>
 
             <p class="hide-if-no-js hidden">
@@ -57,20 +52,6 @@ class WP_MediaMeta extends WP_PostMeta {
             </p>
         </div>
         <?php
-    }
-
-    public static function get_post_meta( $post_id, $key, $single = false ) {
-        if ( get_post_meta( $post_id, $key, $single ) ) {
-            $data = get_post_meta( $post_id, $key, $single );
-        }
-
-        if ( is_array( $data ) ) {
-            $content = "<img src=\"" . $data[0]['src'] . "\" alt=\"" .  $data[0]['alt'] . "\" title=\"" .  $data[0]['title'] . "\" />";
-        } else {
-            $content = false ;
-        }
-
-        return $content;
     }
 
     /**

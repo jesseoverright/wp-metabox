@@ -10,7 +10,7 @@ Check out `examples.php` for examples of creating custom postmeta input, custom 
     $foo = new WP_PostMeta( 'custom-post-meta', array( 'type' => 'text' );
 
     # displays post meta in your theme template file
-    echo WP_PostMeta::get_post_meta( $post_id, 'custom-post-meta', true);
+    echo get_post_meta( $post_id, 'custom-post-meta', true);
 
 `WP_PostMeta` handles admin display and saving post meta for the following input types:
 

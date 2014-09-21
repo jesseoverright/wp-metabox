@@ -37,7 +37,10 @@ class Example_Metabox extends WP_Metabox {
     public function display( $content ) {
         global $post;
 
-        return WP_TextMeta::get_post_meta( $post->ID, 'test' ) . $content;
+        if (get_post_meta($post->ID, 'test' ,true) != '') {
+            $content = get_post_meta($post->ID,'test',true) . $content;
+        }
+        return $content;
     }
 }
 
