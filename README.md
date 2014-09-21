@@ -1,6 +1,6 @@
 # WP-Metabox
 
-A lightweight framework for creating custom metaboxes and custom content types in WordPress.
+A lightweight framework for creating custom post meta, metaboxes and custom content types in WordPress.
 
 WP-Metabox can be used to create and extend custom postmeta types, custom metaboxes, and custom content types. Comment out the `examples.php` include in `wp-metabox.php` to see the examples in action in your WordPress site.
 
