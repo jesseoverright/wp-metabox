@@ -113,6 +113,11 @@ class WP_PostMeta implements PostMeta {
 
     }
 
+    /**
+     * Displays the input box
+     * @param  $data content
+     * @return html       input field
+     */
     protected function display_input( $data ) {
         // limit input depending on max length
         if ( $this->max_length < 100 ) {

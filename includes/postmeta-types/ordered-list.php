@@ -31,7 +31,7 @@ class WP_OrderedListMeta extends WP_PostMeta {
         echo "</p><ul class=\"wp-metabox-ordered-list\">";
 
         foreach ( $data as $value ) {
-            $this->display_input( $value );
+            $this->display_item( $value );
         }
 
         echo "</ul><p>";
@@ -44,8 +44,24 @@ class WP_OrderedListMeta extends WP_PostMeta {
 
     }
 
+    /**
+     * Displays individual input items and including remove and sort features
+     * @param  $data content
+     * @return data input wrapped in sortable markup
+     */
+    protected function display_item( $data ) {
+        echo "<li class=\"wp-metabox-ordered-item\">";
+        $this->display_input( $data );
+        echo "<button class=\"button wp-metabox-remove\">remove</button></li>";
+    }
+
+    /**
+     * Displays input item
+     * @param  $data content
+     * @return html       display input
+     */
     protected function display_input( $data ) {
-        echo "<li class=\"wp-metabox-ordered-item\"><input type=\"{$this->input_type}\" class=\"wp-metabox-input\" name=\"{$this->key}[]\" value=\"{$data}\" maxlength=\"{$this->max_length}\"><button class=\"button wp-metabox-remove\">remove</button></li>";
+        echo "<input type=\"{$this->input_type}\" class=\"wp-metabox-input\" name=\"{$this->key}[]\" value=\"{$data}\" maxlength=\"{$this->max_length}\">";
     }
 
     /**
