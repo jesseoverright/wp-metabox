@@ -2,7 +2,7 @@
 
 A lightweight framework for creating custom metaboxes and custom content types in WordPress.
 
-Check out `examples.php` for examples of creating custom postmeta input, custom metaboxes, and custom content types. You can comment out the include in `wp-metabox.php` to see the examples in action in your WordPress site.
+WP-Metabox can be used to create and extend custom postmeta types, custom metaboxes, and custom content types. Comment out the `examples.php` include in `wp-metabox.php` to see the examples in action in your WordPress site.
 
 ## Custom Post Meta
 
@@ -16,11 +16,11 @@ Check out `examples.php` for examples of creating custom postmeta input, custom 
 
 - Text input
 - URL sanitized text
-- numbers
-- dropdowns
-- textareas
-- media & images (using the WordPress media uploader)
-- ordered lists
+- Numbers
+- Dropdowns
+- Textareas
+- Media & images (using the WordPress media uploader)
+- Ordered lists
 
 ## Custom Metaboxes
 
@@ -30,17 +30,18 @@ Check out `examples.php` for examples of creating custom postmeta input, custom 
         WP_PostMetaFactory::get_instance(),
         array(
             'label' => 'Custom Metabox',
-            'posttype' => 'post'
+            'posttype' => 'post',
+            'type' => 'ordered-list'
         )
     );
 
 `WP_SimpleMetabox` can be used to create metaboxes with one post meta type.
 
-`WP_Metabox` can be extended with multiple post meta options. Check out [the examples.php](https://github.com/jesseoverright/wp-metabox/blob/master/examples.php) for example usage.
+`WP_Metabox` can also be extended with multiple post meta options. Check out [the examples.php](https://github.com/jesseoverright/wp-metabox/blob/master/examples.php) for example custom metaboxes and post meta types.
 
 ## Custom Content Types
 
     # creates a basic custom content type
     $foo = new WP_ContentType( 'foo' , array( 'singular' => 'Content Type Name' ) );
 
-`WP_ContentType` has helps create custom content types. It will register the post type using some default options and can be overridden as necessary.
+`WP_ContentType` helps create custom content types. It will register the post type using some default options and can be overridden as necessary.
