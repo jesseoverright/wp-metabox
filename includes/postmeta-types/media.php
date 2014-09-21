@@ -37,7 +37,13 @@ class WP_MediaMeta extends WP_PostMeta {
             </p>
 
             <div class="image-container hidden">
-                <img src="<?php echo $data[ $this->key . '-src']; ?>" alt="<?php echo $data[ $this->key . '-alt']; ?>" title="<?php echo $data[ $this->key . '-title']; ?>" />
+                <?php
+                if ( $this->get_post_meta( $post_id, $this->key ) ) {
+                    echo $this->get_post_meta( $post_id, $this->key );
+                } else {
+                    echo "<img src=\"\" alt=\"\" title=\"\" />";
+                }
+                ?>
             </div>
 
             <p class="hide-if-no-js hidden">
@@ -45,34 +51,26 @@ class WP_MediaMeta extends WP_PostMeta {
             </p>
 
             <p class="image-info">
-                <input type="hidden" class="src" name="<?php echo $this->key ?>-src" value="<?php echo $data[ $this->key . '-src'] ?>" />
-                <input type="hidden" class="title" name="<?php echo $this->key ?>-title" value="<?php echo $data[ $this->key . '-title'] ?>" />
-                <input type="hidden" class="alt" name="<?php echo $this->key ?>-alt" value="<?php echo $data[ $this->key . '-alt'] ?>" />
+                <input type="hidden" class="src" name="<?php echo $this->key ?>[src]" value="<?php echo $data['src'] ?>" />
+                <input type="hidden" class="title" name="<?php echo $this->key ?>[title]" value="<?php echo $data['title'] ?>" />
+                <input type="hidden" class="alt" name="<?php echo $this->key ?>[alt]" value="<?php echo $data['alt'] ?>" />
             </p>
         </div>
         <?php
     }
 
-    /**
-     * Updates post meta for a post in WP database as a single array
-     * @param  int $post_id individual post id
-     * @param  $data    content
-     */
-    public function update( $post_id, $data ) {
-        $media = array();
-        if ( isset( $_POST[ $this->key . '-src' ] ) ) {
-            $media[ $this->key . '-src'] = sanitize_text_field( $_POST[ $this->key . '-src'] );
+    public static function get_post_meta( $post_id, $key, $single = false ) {
+        if ( get_post_meta( $post_id, $key, $single ) ) {
+            $data = get_post_meta( $post_id, $key, $single );
         }
 
-        if ( isset( $_POST[ $this->key . '-title'] ) ) {
-            $media[ $this->key . '-title'] = sanitize_text_field( $_POST[ $this->key . '-title'] );
+        if ( is_array( $data ) ) {
+            $content = "<img src=\"" . $data[0]['src'] . "\" alt=\"" .  $data[0]['alt'] . "\" title=\"" .  $data[0]['title'] . "\" />";
+        } else {
+            $content = false ;
         }
 
-        if ( isset( $_POST[ $this->key . '-alt'] ) ) {
-            $media[ $this->key . '-alt'] = sanitize_text_field( $_POST[ $this->key . '-alt'] );
-        }
-
-        parent::update( $post_id, $media );
+        return $content;
     }
 
     /**
