@@ -9,8 +9,20 @@
 }
 
 .wp-metabox-ordered-item {
-    border: 1px dotted #999;
-    padding: 5px;
+    border: 1px solid #eee;
+    padding: 15px 15px 5px 15px;
+    cursor: move;
+}
+
+.wp-metabox-ordered-item:hover {
+    border-color: #ccc;
+}
+
+.wp-metabox-ordered-item .wp-metabox-input {
+    display: inline;
+    width: 82.5%;
+    margin-right: 20px;
+    margin-bottom: 10px;
 }
 
 .wp-metabox-media .image-container img {

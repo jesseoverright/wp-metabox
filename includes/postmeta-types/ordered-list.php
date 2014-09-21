@@ -22,17 +22,23 @@ class WP_OrderedListMeta extends WP_PostMeta {
     public function display_postmeta( $post_id ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
         
-        if ( ! is_array( $data ) ) $data = array( 'some text', 'a test' );
+        $data[] = '';
         
         echo "<p>";
 
         $this->display_label();
+
+        echo "</p>";
         
         echo "<ul class=\"wp-metabox-ordered-list\">";
 
         foreach ( $data as $value ) {
             $this->display_input( $value );
         }
+
+        echo "</ul><p>";
+
+        echo "<button class=\"button button-large wp-metabox-add-new\">Add New</button>";
 
         $this->display_description();
 
@@ -41,7 +47,7 @@ class WP_OrderedListMeta extends WP_PostMeta {
     }
 
     protected function display_input( $data ) {
-        echo "<li class=\"wp-metabox-ordered-item\"><input type=\"{$this->input_type}\" class=\"widefat wp-metabox-input\" name=\"{$this->key}[]\" value=\"{$data}\" maxlength=\"{$this->max_length}\"></li>";
+        echo "<li class=\"wp-metabox-ordered-item\"><input type=\"{$this->input_type}\" class=\"wp-metabox-input\" name=\"{$this->key}[]\" value=\"{$data}\" maxlength=\"{$this->max_length}\"><button class=\"button wp-metabox-remove\">remove</button></li>";
     }
 
     /**
@@ -50,20 +56,13 @@ class WP_OrderedListMeta extends WP_PostMeta {
      * @param  $data    content
      */
     public function update( $post_id, $data ) {
-        $media = array();
-        if ( isset( $_POST[ $this->key . '-src' ] ) ) {
-            $media[ $this->key . '-src'] = sanitize_text_field( $_POST[ $this->key . '-src'] );
+        foreach ( $data as $key => $value ) {
+            if ( $value == '' ) {
+                unset( $data[ $key ] );
+            }
         }
 
-        if ( isset( $_POST[ $this->key . '-title'] ) ) {
-            $media[ $this->key . '-title'] = sanitize_text_field( $_POST[ $this->key . '-title'] );
-        }
-
-        if ( isset( $_POST[ $this->key . '-alt'] ) ) {
-            $media[ $this->key . '-alt'] = sanitize_text_field( $_POST[ $this->key . '-alt'] );
-        }
-
-        parent::update( $post_id, $media );
+        parent::update( $post_id, $data );
     }
 
     /**
