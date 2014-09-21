@@ -16,6 +16,11 @@ if ( ! interface_exists( 'PostMeta' ) ) {
          * Updates post meta for individual post
          */
         public function update( $post_id, $data );
+
+        /**
+         * Returns post meta data based on post meta type
+         */
+        public static function get_post_meta( $post_id, $key, $single);
     }
 }
 
@@ -111,6 +116,22 @@ class WP_PostMeta implements PostMeta {
             delete_post_meta($post_id, $this->key, get_post_meta($post_id, $this->key, true));
         }
 
+    }
+
+    /**
+     * Returns post meta data based on provided key and custom post meta type
+     * @param  ine  $post_id individual post id
+     * @param  string  $key     the post meta key
+     * @param  boolean $single  single result or all
+     * @return content
+     */
+    public static function get_post_meta( $post_id, $key, $single = true ) {
+
+        if ( get_post_meta( $post_id, $key, $single ) ) {
+            $content = get_post_meta( $post_id, $key, $single );
+        }
+
+        return $content;
     }
 
     /**

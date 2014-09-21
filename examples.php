@@ -36,10 +36,8 @@ class Example_Metabox extends WP_Metabox {
     # displays some of the metadata automatically on the content
     public function display( $content ) {
         global $post;
-        if (get_post_meta($post->ID, 'test' ,true) != '') {
-            $content = get_post_meta($post->ID,'test',true) . $content;
-        }
-        return $content;
+
+        return WP_TextMeta::get_post_meta( $post->ID, 'test' ) . $content;
     }
 }
 
@@ -108,6 +106,8 @@ class OrderedMedia extends WP_OrderedListMeta {
     public function display_postmeta( $post_id ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
 
+        if ( ! is_array( $data ) ) $data = array();
+
         $test = $data[ 'first' ];
         $next = $data[ 'next' ];
 
@@ -146,6 +146,8 @@ class OrderedMedia extends WP_OrderedListMeta {
     }
 
     public function update( $post_id, $data ) {
+
+        if ( ! is_array( $data ) ) $data = array();
 
         foreach ( $data[ $this->key . '-first' ] as $key => $value ) {
             if ( $value == '' && $data[ $this->key . '-next' ][$key] == '' ) {
