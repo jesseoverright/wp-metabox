@@ -27,15 +27,28 @@ class WP_PostMetaFactory implements PostMetaFactory {
     protected static $instance;
 
     /**
-     * Custom registered postmeta
+     * Postmeta types registered to this factory
      * @var array
      */
-    protected $registered_postmeta = array();
+    protected $registered_postmeta_types = array();
 
     /**
      * Disables construct functionality from outside object
      */
     protected function __construct() {
+        # register default post meta types
+        $this->registered_postmeta_types = array (
+            'url' => 'WP_URLMeta',
+            'select' => 'WP_SelectMeta',
+            'textarea' => 'WP_TextareaMeta',
+            'media' => 'WP_MediaMeta',
+            'image' => 'WP_MediaMeta',
+            'ordered' => 'WP_OrderedListMeta',
+            'ordered-list' => 'WP_OrderedListMeta',
+            'int' => 'WP_NumberMeta',
+            'number' => 'WP_NumberMeta',
+            'text' => 'WP_TextMeta'
+        );
     }
 
     /**
@@ -62,38 +75,14 @@ class WP_PostMetaFactory implements PostMetaFactory {
         if ( $options['type'] ) $meta_type = $options['type']; else $meta_type = 'text';
 
         # if new post meta types have been registered, check for type
-        if ( array_key_exists( $meta_type, $this->registered_postmeta ) ) {
+        if ( array_key_exists( $meta_type, $this->registered_postmeta_types ) ) {
 
-            $PostMeta = new $this->registered_postmeta[ $meta_type ]( $key, $options );
+            $PostMeta = new $this->registered_postmeta_types[ $meta_type ]( $key, $options );
 
         } else {
 
-            switch ( $meta_type ) {
-                case 'url':
-                    $PostMeta = new WP_URLMeta( $key, $options );
-                    break;
-                case 'select':
-                    $PostMeta = new WP_SelectMeta( $key, $options );
-                    break;
-                case 'textarea':
-                    $PostMeta = new WP_TextareaMeta( $key, $options );
-                    break;
-                case 'media':
-                case 'image':
-                    $PostMeta = new WP_MediaMeta( $key, $options );
-                    break;
-                case 'ordered':
-                case 'ordered-list':
-                    $PostMeta = new WP_OrderedListMeta( $key, $options );
-                    break;
-                case 'int':
-                case 'number':
-                    $PostMeta = new WP_NumberMeta( $key, $options );
-                    break;
-                case 'text':
-                default:
-                    $PostMeta = new WP_TextMeta( $key, $options );
-            }
+            $PostMeta = new WP_PostMeta( $key, $options );
+            
         }
 
         return $PostMeta;
@@ -104,7 +93,7 @@ class WP_PostMetaFactory implements PostMetaFactory {
      * @param  string $type                the type of this posttype
      * @param  WP_PostMeta $postmeta_class_name the class name of the custom PostMeta class
      */
-    public function register_posttype( $type, $postmeta_class_name ) {
-        $this->registered_postmeta[ $type ] = $postmeta_class_name;
+    public function register_postmeta_type( $type, $postmeta_class_name ) {
+        $this->registered_postmeta_types[ $type ] = $postmeta_class_name;
     }
 }

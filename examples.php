@@ -64,8 +64,10 @@ class Example_Content_Type extends WP_ContentType {
         # registers the post type with provided options
         parent::__construct( $key, $options );
 
+        $postmeta_factory = WP_PostMetaFactory::get_instance();
+
         # creates a simple metabox with one url input using WP_SimpleMetabox
-        $this->metaboxes['project-url'] = new WP_SimpleMetabox( 'project-url', WP_PostMetaFactory::get_instance(), array (
+        $this->metaboxes['project-url'] = new WP_SimpleMetabox( 'project-url', $postmeta_factory, array (
             'label' => 'Project URL',
             'type' => 'url',
             'posttype' => $this->key
@@ -73,24 +75,24 @@ class Example_Content_Type extends WP_ContentType {
         );
 
         # creates another simple metabox with one text input using WP_SimpleMetabox
-        $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', WP_PostMetaFactory::get_instance(), array (
+        $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', $postmeta_factory, array (
             'label' => 'Project Date',
             'posttype' => $this->key
             )
         );
 
         # creates a simple metabox with an ordered list
-        $this->metaboxes['ordered-list'] = new WP_SimpleMetabox( 'ordered-list', WP_PostMetaFactory::get_instance(), array (
+        $this->metaboxes['ordered-list'] = new WP_SimpleMetabox( 'ordered-list', $postmeta_factory, array (
             'label' => 'Ordered List',
             'posttype' => $this->key,
             'type' => 'ordered-list'
             )
         );
 
-        WP_PostMetaFactory::get_instance()->register_posttype( 'custom-ordered', 'OrderedMedia' );
+        $postmeta_factory->register_postmeta_type( 'custom-ordered', 'OrderedMedia' );
 
         # creates a simple metabox with an ordered list
-        $this->metaboxes['custom-ordered'] = new WP_SimpleMetabox( 'custom-ordered', WP_PostMetaFactory::get_instance(), array (
+        $this->metaboxes['custom-ordered'] = new WP_SimpleMetabox( 'custom-ordered', $postmeta_factory, array (
             'label' => 'Ordered Multi Text Inputs',
             'posttype' => $this->key,
             'type' => 'custom-ordered'
