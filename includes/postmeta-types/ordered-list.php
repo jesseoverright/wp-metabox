@@ -44,6 +44,14 @@ class WP_OrderedListMeta extends WP_PostMeta {
 
     }
 
+    public static function get_post_meta( $post_id, $key, $single = true ) {
+        if ( get_post_meta( $post_id, $key, $single ) ) {
+            $content = get_post_meta( $post_id, $key, $single );
+        }
+
+        return var_dump( $content );
+    }
+
     /**
      * Displays individual input items and including remove and sort features
      * @param  $data content
