@@ -29,7 +29,7 @@ WP-Metabox can be used to create and extend custom postmeta types, custom metabo
         'custom-metabox',
         WP_PostMetaFactory::get_instance(),
         array(
-            'label' => 'Custom Metabox',
+            'label' => __( 'Custom Metabox' ),
             'posttype' => 'post',
             'type' => 'ordered-list'
         )

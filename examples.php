@@ -27,7 +27,7 @@ class Example_Metabox extends WP_Metabox {
         $this->metadata['image_upload'] = $post_meta_factory->create( 'image_upload', array( 'type' => 'media' ) );
 
         # a second image upload
-        $this->metadata['second_upload'] = $post_meta_factory->create( 'second_upload', array( 'type' => 'media', 'label' => 'Second Upload' ) );
+        $this->metadata['second_upload'] = $post_meta_factory->create( 'second_upload', array( 'type' => 'media', 'label' => __( 'Second Upload', 'wp-metabox' ) ) );
 
 
         add_filter( 'the_content' , array($this, 'display') );
@@ -49,7 +49,7 @@ $example = new Example_Metabox(
     'test',
     WP_PostMetaFactory::get_instance(),
     array(
-        'label' => 'Example Metabox',
+        'label' => __('Example Metabox', 'wp-metabox' ),
         'posttype' => 'example-content-type',
     )
 );
@@ -69,7 +69,7 @@ class Example_Content_Type extends WP_ContentType {
 
         # creates a simple metabox with one url input using WP_SimpleMetabox
         $this->metaboxes['project-url'] = new WP_SimpleMetabox( 'project-url', $postmeta_factory, array (
-            'label' => 'Project URL',
+            'label' => __('Project URL', 'wp-metabox' ),
             'type' => 'url',
             'posttype' => $this->key
             )
@@ -77,14 +77,14 @@ class Example_Content_Type extends WP_ContentType {
 
         # creates another simple metabox with one text input using WP_SimpleMetabox
         $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', $postmeta_factory, array (
-            'label' => 'Project Date',
+            'label' => __( 'Project Date', 'wp-metabox' ),
             'posttype' => $this->key
             )
         );
 
         # creates a simple metabox with an ordered list
         $this->metaboxes['ordered-list'] = new WP_SimpleMetabox( 'ordered-list', $postmeta_factory, array (
-            'label' => 'Ordered List',
+            'label' => __( 'Ordered List', 'wp-metabox' ),
             'posttype' => $this->key,
             'type' => 'ordered-list'
             )
@@ -94,7 +94,7 @@ class Example_Content_Type extends WP_ContentType {
 
         # creates a simple metabox with an ordered list
         $this->metaboxes['custom-ordered'] = new WP_SimpleMetabox( 'custom-ordered', $postmeta_factory, array (
-            'label' => 'Ordered Multi Text Inputs',
+            'label' => __( 'Ordered Multi Text Inputs', 'wp-metabox' ),
             'posttype' => $this->key,
             'type' => 'custom-ordered'
             )
