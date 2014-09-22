@@ -111,10 +111,10 @@ class OrderedGroup extends WP_OrderedListMeta {
 
         if ( ! is_array( $data ) ) $data = array();
 
-        $test = $data[ 'first' ];
+        $first = $data[ 'first' ];
         $next = $data[ 'next' ];
 
-        $test[] = '';
+        $first[] = '';
         
         echo "<p>";
 
@@ -122,7 +122,7 @@ class OrderedGroup extends WP_OrderedListMeta {
 
         echo "</p><ul class=\"wp-metabox-ordered-list\">";
 
-        foreach ( $test as $key => $value ) {
+        foreach ( $first as $key => $value ) {
             $data[ $this->key ][ 'first' ] = $value;
             $data[ $this->key ][ 'next' ] = $next[ $key ];
             $this->display_item( $data );
@@ -152,10 +152,10 @@ class OrderedGroup extends WP_OrderedListMeta {
 
         if ( ! is_array( $data ) ) $data = array();
 
-        foreach ( $data[ $this->key . '-first' ] as $key => $value ) {
-            if ( $value == '' && $data[ $this->key . '-next' ][$key] == '' ) {
-                unset( $data[$this->key . '-first' ][$key] );
-                unset( $data[$this->key . '-next' ][$key] );
+        foreach ( $data[ 'first' ] as $key => $value ) {
+            if ( $value == '' && $data[ 'next' ][$key] == '' ) {
+                unset( $data[ 'first' ][$key] );
+                unset( $data[ 'next' ][$key] );
             }
         }
         

@@ -10,6 +10,8 @@
 
 .wp-metabox-ordered-item {
     border: 1px solid #eee;
+    background-color: #fafafa;
+    margin-bottom: 10px;
     padding: 15px 15px 5px 15px;
     cursor: move;
 }
