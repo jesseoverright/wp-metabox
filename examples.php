@@ -90,7 +90,7 @@ class Example_Content_Type extends WP_ContentType {
             )
         );
 
-        $postmeta_factory->register_postmeta_type( 'custom-ordered', 'OrderedMedia' );
+        $postmeta_factory->register_postmeta_type( 'custom-ordered', 'OrderedGroup' );
 
         # creates a simple metabox with an ordered list
         $this->metaboxes['custom-ordered'] = new WP_SimpleMetabox( 'custom-ordered', $postmeta_factory, array (
@@ -105,7 +105,7 @@ class Example_Content_Type extends WP_ContentType {
 }
 
 # Example customized ordered list with two text areas
-class OrderedMedia extends WP_OrderedListMeta {
+class OrderedGroup extends WP_OrderedListMeta {
     public function display_postmeta( $post_id ) {
         if ( ! $data ) $data = get_post_meta( $post_id, $this->key, true );
 
