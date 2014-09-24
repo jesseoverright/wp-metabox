@@ -44,16 +44,6 @@ class Example_Metabox extends WP_Metabox {
     }
 }
 
-# add the Example_Metabox to the example-content-type content type
-$example = new Example_Metabox(
-    'test',
-    WP_PostMetaFactory::get_instance(),
-    array(
-        'label' => __('Example Metabox', 'wp-metabox' ),
-        'posttype' => 'example-content-type',
-    )
-);
-
 /**
  * Example Custom Content Type
  * Creates a sample custom content type using WP Metabox to create custom postmeta boxes
@@ -166,6 +156,16 @@ class OrderedGroup extends WP_OrderedListMeta {
 function init_example_content_type() {
     global $example_content_type;
     $example_content_type = new Example_Content_Type();
+
+    # add the Example_Metabox to the example-content-type content type
+    $example = new Example_Metabox(
+        'test',
+        WP_PostMetaFactory::get_instance(),
+        array(
+            'label' => __('Example Metabox', 'wp-metabox' ),
+            'posttype' => 'example-content-type',
+        )
+    );
 }
 
 add_action( 'init', 'init_example_content_type');
