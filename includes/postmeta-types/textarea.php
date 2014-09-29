@@ -16,12 +16,12 @@ class WP_TextareaMeta extends WP_PostMeta {
     /**
      * Constructor adds height option
      * @param string $key     key for this post meta
-     * @param array  $options
+     * @param array  $args
      */
-    public function __construct( $key, $options = array() ) {
-        if ( $options['rows'] ) $this->rows = $options['rows'];
+    public function __construct( $key, $args = array() ) {
+        if ( $args['rows'] ) $this->rows = $args['rows'];
 
-        parent::__construct( $key, $options );
+        parent::__construct( $key, $args );
 
     }
 

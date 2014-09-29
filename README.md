@@ -44,4 +44,4 @@ WP-Metabox can be used to create and extend custom postmeta types, custom metabo
     # creates a basic custom content type
     $foo = new WP_ContentType( 'foo' , array( 'singular' => 'Content Type Name' ) );
 
-`WP_ContentType` helps create custom content types. It will register the post type using some default options and can be overridden as necessary.
+`WP_ContentType` helps create custom content types. It will register the post type using some default arguments and can be overridden as necessary.

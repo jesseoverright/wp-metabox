@@ -5,7 +5,7 @@ if ( ! interface_exists( 'ContentType' ) ) {
         /**
          * Constructor
          */
-        public function __construct( $key, $options = array() );
+        public function __construct( $key, $args = array() );
     }
 }
 
@@ -28,16 +28,16 @@ class WP_ContentType implements ContentType {
     /**
      * Constructor
      * @param string $key     key for this custom content type
-     * @param array  $options
+     * @param array  $args
      */
-    public function __construct( $key, $options = array() ) {
+    public function __construct( $key, $args = array() ) {
         $this->key = $key;
         $this->nonce = $key . 'nonce';
-        $this->title = $options['title'];
+        $this->title = $args['title'];
 
-        $this->set_singular_plural_names( $options['singular'], $options['plural']);
+        $this->set_singular_plural_names( $args['singular'], $args['plural']);
 
-        $default_options = array(
+        $defaults = array(
             'labels' => array(
                 'name' => __( $this->plural_name ),
                 'singular_name' => __( $this->singular_name ),
@@ -61,14 +61,10 @@ class WP_ContentType implements ContentType {
             'rewrite' => array( 'with_front' => false, 'slug' => $key ) );
 
         // set defaults to register post type
-        foreach ( $default_options as $key => $value ) {
-            if ( ! array_key_exists( $key, $options ) ) {
-                $options[ $key ] = $value;
-            }
-        }
+        $args = wp_parse_args( $args, $defaults );
 
         // register the content type
-        register_post_type( $this->key, $options );
+        register_post_type( $this->key, $args );
 
         if ( $this->title ) {
             add_filter( 'manage_edit-' . $this->key . '_columns', array( $this, 'rename_title_column' ) );

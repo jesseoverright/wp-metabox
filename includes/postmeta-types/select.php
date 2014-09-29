@@ -17,13 +17,13 @@ class WP_SelectMeta extends WP_PostMeta {
     /**
      * Constructor adds choices option
      * @param string $key     key for this post meta
-     * @param array  $options
+     * @param array  $args
      */
-    public function __construct( $key, $options = array() ) {
+    public function __construct( $key, $args = array() ) {
                 
-        if ( $options['choices'] ) $this->choices = $options['choices'];
+        if ( $args['choices'] ) $this->choices = $args['choices'];
 
-        parent::__construct( $key, $options );
+        parent::__construct( $key, $args );
 
     }
 

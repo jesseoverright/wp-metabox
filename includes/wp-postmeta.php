@@ -5,7 +5,7 @@ if ( ! interface_exists( 'PostMeta' ) ) {
         /**
          * Constructor
          */
-        public function __construct( $key, $options = array() );
+        public function __construct( $key, $args = array() );
 
         /**
          * Displays the postmeta input
@@ -54,26 +54,26 @@ class WP_PostMeta implements PostMeta {
     /**
      * Constructor
      * @param string $key     key for this post meta
-     * @param array  $options
+     * @param array  $args
      */
-    public function __construct($key, $options = array() ) {
+    public function __construct($key, $args = array() ) {
         $this->key = $key;
 
-        if ( $options['label'] ) {
-            $this->label = $options['label'];
+        if ( $args['label'] ) {
+            $this->label = $args['label'];
         } else {
             $this->label = $this->key;
         }
 
-        if ( $options['hidelabel'] ) {
+        if ( $args['hidelabel'] ) {
             $this->hidelabel = true;
         }
 
-        if ( $options['max_length'] ) {
-            $this->max_length = $options['max_length'];
+        if ( $args['max_length'] ) {
+            $this->max_length = $args['max_length'];
         }
 
-        $this->description = $options['description'];
+        $this->description = $args['description'];
     }
 
     /**

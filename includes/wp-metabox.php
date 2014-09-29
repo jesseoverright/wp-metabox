@@ -5,7 +5,7 @@ if ( ! interface_exists( 'Metabox' ) ) {
         /**
          * Constructor
          */
-        public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() );
+        public function __construct( $key, PostMetaFactory $post_meta_factory, $args = array() );
 
         /**
          * Adds the metabox
@@ -68,15 +68,15 @@ class WP_Metabox implements Metabox {
      * Constructor
      * @param  string key for this metabox
      * @param PostMetaFactory $post_meta_factory PostMeta factory dependency
-     * @param array           $options           
+     * @param array           $args           
      */
-    public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() ) {
+    public function __construct( $key, PostMetaFactory $post_meta_factory, $args = array() ) {
         $this->_post_meta_factory = $post_meta_factory;
 
         $this->key = $key;
-        $this->label = $options['label'];
-        if ( $options['posttype'] ) $this->posttype = $options['posttype'];
-        if ( $options['context'] ) $this->context = $options['context'];
+        $this->label = $args['label'];
+        if ( $args['posttype'] ) $this->posttype = $args['posttype'];
+        if ( $args['context'] ) $this->context = $args['context'];
 
         add_action( 'admin_init', array( $this, 'add_metabox' ) );
         add_action( 'save_post', array( $this, 'save' ) );
@@ -130,14 +130,14 @@ class WP_SimpleMetabox extends WP_Metabox {
      * Constructor
      * @param  string key for this metabox
      * @param PostMetaFactory $post_meta_factory PostMeta factory dependency
-     * @param array           $options           
+     * @param array           $args           
      */
-    public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() ) {
-        parent::__construct( $key, $post_meta_factory, $options );
+    public function __construct( $key, PostMetaFactory $post_meta_factory, $args = array() ) {
+        parent::__construct( $key, $post_meta_factory, $args );
 
         // hide the metaboxes label
-        $options['hidelabel'] = true;
-        $this->metadata[ $this->key ] = $this->_post_meta_factory->create( $this->key, $options );
+        $args['hidelabel'] = true;
+        $this->metadata[ $this->key ] = $this->_post_meta_factory->create( $this->key, $args );
     }
 
 }

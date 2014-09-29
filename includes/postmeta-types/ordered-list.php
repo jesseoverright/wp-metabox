@@ -6,10 +6,10 @@ class WP_OrderedListMeta extends WP_PostMeta {
      *
      * Enqueues required javascript for sortable array
      * @param string $key     key for this post meta
-     * @param array  $options
+     * @param array  $args
      */
-    public function __construct( $key, $options = array() ) {
-        parent::__construct( $key, $options );
+    public function __construct( $key, $args = array() ) {
+        parent::__construct( $key, $args );
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }

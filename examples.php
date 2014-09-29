@@ -4,8 +4,8 @@
  * Example usage of a custom metabox with several postmeta types included
  */
 class Example_Metabox extends WP_Metabox {
-    public function __construct( $key, PostMetaFactory $post_meta_factory, $options = array() ) {
-        parent::__construct( $key, $post_meta_factory, $options );
+    public function __construct( $key, PostMetaFactory $post_meta_factory, $args = array() ) {
+        parent::__construct( $key, $post_meta_factory, $args );
 
         # A basic text box called 'test'
         $this->metadata['test'] = $post_meta_factory->create( 'test' );
@@ -50,10 +50,10 @@ class Example_Metabox extends WP_Metabox {
  */
 class Example_Content_Type extends WP_ContentType {
 
-    function __construct( $key = 'example-content-type', $options = array( 'singular' => 'Content Type') ) {
+    function __construct( $key = 'example-content-type', $args = array( 'singular' => 'Content Type') ) {
 
-        # registers the post type with provided options
-        parent::__construct( $key, $options );
+        # registers the post type with provided arguments
+        parent::__construct( $key, $args );
 
         $postmeta_factory = WP_PostMetaFactory::get_instance();
 

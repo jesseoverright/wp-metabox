@@ -11,10 +11,10 @@ class WP_MediaMeta extends WP_PostMeta {
      *
      * Enqueues required javascript for media upload
      * @param string $key     key for this post meta
-     * @param array  $options
+     * @param array  $args
      */
-    public function __construct( $key, $options = array() ) {
-        parent::__construct( $key, $options );
+    public function __construct( $key, $args = array() ) {
+        parent::__construct( $key, $args );
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
     }
@@ -37,7 +37,7 @@ class WP_MediaMeta extends WP_PostMeta {
             </p>
 
             <div class="image-container hidden">
-                <img src="<?php echo $data[0]['src']; ?>" alt="<?php echo $data[0]['alt']; ?>" title="<?php echo $data[0]['title']; ?>" />
+                <img src="<?php echo $data['src']; ?>" alt="<?php echo $data['alt']; ?>" title="<?php echo $data['title']; ?>" />
 
             </div>
 

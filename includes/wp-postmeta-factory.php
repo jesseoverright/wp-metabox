@@ -11,10 +11,10 @@ if ( ! interface_exists( 'PostMetaFactory' ) ) {
         /**
          * Creates a post meta type
          * @param  string $key     key for this post meta
-         * @param  array  $options
+         * @param  array  $args
          * @return WP_PostMeta          the post meta object
          */
-        public function create( $key, $options = array() );
+        public function create( $key, $args = array() );
     }
 }
 
@@ -67,21 +67,21 @@ class WP_PostMetaFactory implements PostMetaFactory {
     /**
      * Creates a post meta type based on option type
      * @param  string $key     key for this post meta
-     * @param  array  $options
+     * @param  array  $args
      * @return WP_PostMeta          the post meta object
      */
-    public function create( $key, $options = array() ) {
+    public function create( $key, $args = array() ) {
 
-        if ( $options['type'] ) $meta_type = $options['type']; else $meta_type = 'text';
+        if ( $args['type'] ) $meta_type = $args['type']; else $meta_type = 'text';
 
         # if new post meta types have been registered, check for type
         if ( array_key_exists( $meta_type, $this->registered_postmeta_types ) ) {
 
-            $PostMeta = new $this->registered_postmeta_types[ $meta_type ]( $key, $options );
+            $PostMeta = new $this->registered_postmeta_types[ $meta_type ]( $key, $args );
 
         } else {
 
-            $PostMeta = new WP_PostMeta( $key, $options );
+            $PostMeta = new WP_PostMeta( $key, $args );
             
         }
 
