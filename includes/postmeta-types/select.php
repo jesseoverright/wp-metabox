@@ -36,12 +36,23 @@ class WP_SelectMeta extends WP_PostMeta {
 
         echo "<br><select id=\"{$this->key}\" name=\"{$this->key}\">";
 
-        foreach ( $this->choices as $value => $label ) {
-            echo "<option value=\"{$value}\"";
-            if ( $value == $data ) {
-                echo " selected";
+        # check if array is associative or not to determine custom labels
+        $has_custom_labels = array_keys( $this->choices ) !== range(0, count( $this->choices ) - 1 );
+
+        foreach ( $this->choices as $key => $value ) {
+            if ( $has_custom_labels ) {
+                echo "<option value=\"{$key}\"";
+                if ( $key == $data ) {
+                    echo " selected";
+                }
+            } else {
+                echo "<option value=\"{$value}\"";
+                if ( $value == $data ) {
+                    echo " selected";
+                }
             }
-            echo ">{$label}</option>";
+            
+            echo ">{$value}</option>";
         }
 
         echo "</select>";

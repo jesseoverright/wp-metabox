@@ -14,12 +14,23 @@ class Example_Metabox extends WP_Metabox {
         $this->metadata['select'] = $post_meta_factory->create(
             'select',
             array(
+                'label' => __('Basic Select Menu', 'wp-metabox'),
                 'type' => 'select',
-                'choices' => array(
-                    1 => 'one',
-                    2 => 'two',
-                    3 => 'three',
-                )
+                'choices' => array( 'one', 'two', 'three' ),
+            )
+        );
+
+        # A select menu with custom labels
+        $this->metadata['label-select'] = $post_meta_factory->create(
+            'label-select',
+            array(
+                'label' => __('Select Menu with Custom Labels', 'wp-metabox' ),
+                'type' => 'select',
+                'choices' => array( 
+                    'one' => 'ONE',
+                    'two' => 'Tw0',
+                    'three' => '3rEEE'
+                ),
             )
         );
 
