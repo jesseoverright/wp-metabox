@@ -9,10 +9,19 @@ class WP_SelectMeta extends WP_PostMeta {
 
     /**
      * Choices available for select options
+     * can be just an array
+     *  ex. $choices = array( 'value', 'value2' )
+     * or an associative array for custom labels
      *  ex. $choices['database_value'] = 'label'
      * @var array
      */
     protected $choices = array();
+
+    /**
+     * Flag for if choices include custom labels
+     * @var boolean
+     */
+    protected $has_custom_labels;
 
     /**
      * Constructor adds choices option
@@ -22,6 +31,9 @@ class WP_SelectMeta extends WP_PostMeta {
     public function __construct( $key, $args = array() ) {
                 
         if ( $args['choices'] ) $this->choices = $args['choices'];
+
+        # check if array is associative or not to determine custom labels
+        $this->has_custom_labels = array_keys( $this->choices ) !== range(0, count( $this->choices ) - 1 );
 
         parent::__construct( $key, $args );
 
@@ -36,11 +48,8 @@ class WP_SelectMeta extends WP_PostMeta {
 
         echo "<br><select id=\"{$this->key}\" name=\"{$this->key}\">";
 
-        # check if array is associative or not to determine custom labels
-        $has_custom_labels = array_keys( $this->choices ) !== range(0, count( $this->choices ) - 1 );
-
         foreach ( $this->choices as $key => $value ) {
-            if ( $has_custom_labels ) {
+            if ( $this->has_custom_labels ) {
                 echo "<option value=\"{$key}\"";
                 if ( $key == $data ) {
                     echo " selected";
@@ -65,8 +74,11 @@ class WP_SelectMeta extends WP_PostMeta {
      * @param  $data    content
      */
     public function update( $post_id, $data ) {
-
-        if ( array_key_exists( $data, $this->choices ) ) $data = $data; else $data = '';
+        if ( $this->has_custom_labels ) {
+            if ( array_key_exists( $data, $this->choices ) ) $data = $data; else $data = '';
+        } else {
+            if ( in_array( $data, $this->choices ) ) $data = $data; else $data = '';
+        }
 
         parent::update( $post_id, $data );
     }
