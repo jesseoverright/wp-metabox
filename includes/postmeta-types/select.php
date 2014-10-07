@@ -45,8 +45,13 @@ class WP_SelectMeta extends WP_PostMeta {
      * @return html          input content
      */
     protected function display_input( $data ) {
+        
+        // add linebreak if label is displayed
+        if ( ! $this->hidelabel ) {
+            echo "<br>";
+        }
 
-        echo "<br><select id=\"{$this->key}\" name=\"{$this->key}\">";
+        echo "<select id=\"{$this->key}\" name=\"{$this->key}\">";
 
         foreach ( $this->choices as $key => $value ) {
             if ( $this->has_custom_labels ) {
