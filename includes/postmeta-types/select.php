@@ -52,6 +52,7 @@ class WP_SelectMeta extends WP_PostMeta {
         }
 
         echo "<select id=\"{$this->key}\" name=\"{$this->key}\">";
+        echo "<option value=\"\">Select {$this->label}</option>";
 
         foreach ( $this->choices as $key => $value ) {
             if ( $this->has_custom_labels ) {
