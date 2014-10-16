@@ -25,6 +25,7 @@ class Example_Metabox extends WP_Metabox {
             'label-select',
             array(
                 'label' => __('Select Menu with Custom Labels', 'wp-metabox' ),
+                'placeholder' => 'Pick one',
                 'type' => 'select',
                 'choices' => array( 
                     'one' => 'ONE',
@@ -70,24 +71,25 @@ class Example_Content_Type extends WP_ContentType {
 
         # creates a simple metabox with one url input using WP_SimpleMetabox
         $this->metaboxes['project-url'] = new WP_SimpleMetabox( 'project-url', $postmeta_factory, array (
-            'label' => __('Project URL', 'wp-metabox' ),
-            'type' => 'url',
-            'posttype' => $this->key
+                'label' => __('Project URL', 'wp-metabox' ),
+                'type' => 'url',
+                'posttype' => $this->key,
+                'placeholder' => 'Enter your URL here.'
             )
         );
 
         # creates another simple metabox with one text input using WP_SimpleMetabox
         $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', $postmeta_factory, array (
-            'label' => __( 'Project Date', 'wp-metabox' ),
-            'posttype' => $this->key
+                'label' => __( 'Project Date', 'wp-metabox' ),
+                'posttype' => $this->key
             )
         );
 
         # creates a simple metabox with an ordered list
         $this->metaboxes['ordered-list'] = new WP_SimpleMetabox( 'ordered-list', $postmeta_factory, array (
-            'label' => __( 'Ordered List', 'wp-metabox' ),
-            'posttype' => $this->key,
-            'type' => 'ordered-list'
+                'label' => __( 'Ordered List', 'wp-metabox' ),
+                'posttype' => $this->key,
+                'type' => 'ordered-list'
             )
         );
 
@@ -95,9 +97,9 @@ class Example_Content_Type extends WP_ContentType {
 
         # creates a simple metabox with an ordered list
         $this->metaboxes['custom-ordered'] = new WP_SimpleMetabox( 'custom-ordered', $postmeta_factory, array (
-            'label' => __( 'Ordered Multi Text Inputs', 'wp-metabox' ),
-            'posttype' => $this->key,
-            'type' => 'custom-ordered'
+                'label' => __( 'Ordered Multi Text Inputs', 'wp-metabox' ),
+                'posttype' => $this->key,
+                'type' => 'custom-ordered'
             )
         );
 
