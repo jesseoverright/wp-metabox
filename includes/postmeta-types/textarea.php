@@ -19,7 +19,9 @@ class WP_TextareaMeta extends WP_PostMeta {
      * @param array  $args
      */
     public function __construct( $key, $args = array() ) {
-        if ( $args['rows'] ) $this->rows = $args['rows'];
+        if ( array_key_exists( 'rows', $args ) ) {
+            $this->rows = $args['rows'];  
+        } 
 
         parent::__construct( $key, $args );
 

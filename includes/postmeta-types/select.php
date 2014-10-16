@@ -30,7 +30,9 @@ class WP_SelectMeta extends WP_PostMeta {
      */
     public function __construct( $key, $args = array() ) {
                 
-        if ( $args['choices'] ) $this->choices = $args['choices'];
+        if ( array_key_exists( 'choices', $args ) ) {
+            $this->choices = $args['choices'];
+        }
 
         # check if array is associative or not to determine custom labels
         $this->has_custom_labels = array_keys( $this->choices ) !== range(0, count( $this->choices ) - 1 );
@@ -52,7 +54,11 @@ class WP_SelectMeta extends WP_PostMeta {
         }
 
         echo "<select id=\"{$this->key}\" name=\"{$this->key}\">";
-        echo "<option value=\"\">Select {$this->label}</option>";
+        if ( $this->placeholder ) {
+            echo "<option value=\"\">{$this->placeholder}</option>";
+        } else {
+            echo "<option value=\"\">Select {$this->label}</option>";
+        }
 
         foreach ( $this->choices as $key => $value ) {
             if ( $this->has_custom_labels ) {

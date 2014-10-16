@@ -75,8 +75,12 @@ class WP_Metabox implements Metabox {
 
         $this->key = $key;
         $this->label = $args['label'];
-        if ( $args['posttype'] ) $this->posttype = $args['posttype'];
-        if ( $args['context'] ) $this->context = $args['context'];
+        if ( array_key_exists( 'posttype', $args ) ) {
+            $this->posttype = $args['posttype'];
+        }
+        if ( array_key_exists( 'context', $args ) ) {
+            $this->context = $args['context'];
+        }
 
         add_action( 'admin_init', array( $this, 'add_metabox' ) );
         add_action( 'save_post', array( $this, 'save' ) );

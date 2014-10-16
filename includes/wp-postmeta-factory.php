@@ -72,7 +72,11 @@ class WP_PostMetaFactory implements PostMetaFactory {
      */
     public function create( $key, $args = array() ) {
 
-        if ( $args['type'] ) $meta_type = $args['type']; else $meta_type = 'text';
+        if ( array_key_exists( 'type', $args ) ) {
+            $meta_type = $args['type'];     
+        } else {
+            $meta_type = 'text';
+        }
 
         # if new post meta types have been registered, check for type
         if ( array_key_exists( $meta_type, $this->registered_postmeta_types ) ) {

@@ -40,6 +40,12 @@ class WP_PostMeta implements PostMeta {
     protected $description;
 
     /**
+     * Placeholder text when no value is present
+     * @var string
+     */
+    protected $placeholder;
+
+    /**
      * Maximum length of content
      * @var integer
      */
@@ -59,17 +65,21 @@ class WP_PostMeta implements PostMeta {
     public function __construct($key, $args = array() ) {
         $this->key = $key;
 
-        if ( $args['label'] ) {
+        if ( array_key_exists('label', $args ) ) {
             $this->label = $args['label'];
         } else {
             $this->label = $this->key;
         }
 
-        if ( $args['hidelabel'] ) {
+        if ( array_key_exists('hidelabel', $args ) ) {
             $this->hidelabel = true;
         }
 
-        if ( $args['max_length'] ) {
+        if ( array_key_exists('placeholder', $args ) ) {
+            $this->placeholder = $args['placeholder'];
+        }
+
+        if ( array_key_exists('max_length', $args ) ) {
             $this->max_length = $args['max_length'];
         }
 
@@ -120,12 +130,19 @@ class WP_PostMeta implements PostMeta {
      * @return html       input field
      */
     protected function display_input( $data ) {
-        // limit input depending on max length
+        # additional input properties if any
+        $additional = "";
+
+        # limit input depending on max length
         if ( $this->max_length < 100 ) {
-            $style = ' style="max-width: ' . ( ( 10 * $this->max_length ) - 20 ) . 'px"';
+            $additional .= ' style="max-width: ' . ( ( 10 * $this->max_length ) - 20 ) . 'px"';
+        }
+        # add placeholder if entered
+        if ( $this->placeholder ) {
+            $additional .= " placeholder=\"{$this->placeholder}\"";
         }
 
-        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"widefat wp-metabox-input\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\"{$style}>";
+        echo "<input type=\"{$this->input_type}\" id=\"{$this->key}\" class=\"widefat wp-metabox-input\" name=\"{$this->key}\" value=\"{$data}\" maxlength=\"{$this->max_length}\"{$additional}>";
     }
 
     /**
