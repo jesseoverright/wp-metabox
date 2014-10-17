@@ -2,17 +2,17 @@
 
 A lightweight framework for creating custom post meta, metaboxes and custom content types in WordPress.
 
-WP-Metabox can be used to create and extend custom postmeta types, custom metaboxes, and custom content types. Comment out the `examples.php` include in `wp-metabox.php` to see the examples in action in your WordPress site.
+WP-Metabox can be used to create and extend custom postmeta types, custom metaboxes, and custom content types. Comment out the `examples.php` include in `wp-metabox.php` to see the examples in action on your WordPress site.
 
 ## Custom Post Meta
 
-    # creates a new post meta type named 'custom-post-meta'
+    # creates a new post meta type named 'custom-post-meta' on posts
     $foo = new WP_PostMeta( 'custom-post-meta', array( 'type' => 'text' );
 
     # displays post meta in your theme template file
     echo get_post_meta( $post_id, 'custom-post-meta', true);
 
-`WP_PostMeta` handles admin display and saving post meta for the following input types:
+`WP_PostMeta` handles admin ui and saving post meta for the following input types:
 
 - Text input
 - URL sanitized text
@@ -20,11 +20,11 @@ WP-Metabox can be used to create and extend custom postmeta types, custom metabo
 - Dropdowns
 - Textareas
 - Media & images (using the WordPress media uploader)
-- Ordered lists
+- Ordered lists (with drag n drop)
 
 ## Custom Metaboxes
 
-    # creates a simple metabox on posts of ordered lists
+    # creates a simple metabox on posts of an ordered list of items
     $foo = new WP_SimpleMetabox(
         'custom-metabox',
         WP_PostMetaFactory::get_instance(),
