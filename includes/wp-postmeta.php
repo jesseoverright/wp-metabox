@@ -177,8 +177,9 @@ require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/select.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/textarea.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/media.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/ordered-list.php' );
+require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/checkbox.php' );
+require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/radio.php' );
 
 // WP_DateMeta
-// WP_RadioMeta
 // WP_WYSIWYGMeta
 // WP_EmailMeta
