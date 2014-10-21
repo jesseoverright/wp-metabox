@@ -18,6 +18,8 @@ WP-Metabox can be used to create and extend custom postmeta types, custom metabo
 - URL sanitized text
 - Numbers
 - Dropdowns
+- Radio buttons
+- Checkboxes
 - Textareas
 - Media & images (using the WordPress media uploader)
 - Ordered lists (with drag n drop)
