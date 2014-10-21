@@ -41,6 +41,26 @@ class Example_Metabox extends WP_Metabox {
         # a second image upload
         $this->metadata['second_upload'] = $post_meta_factory->create( 'second_upload', array( 'type' => 'media', 'label' => __( 'Second Upload', 'wp-metabox' ) ) );
 
+        # checkbox and radio examples
+        $this->metadata['checkbox'] = $post_meta_factory->create(
+            'checkbox',
+            array(
+                'label' => __('Basic Checkbox', 'wp-metabox'),
+                'type' => 'checkbox',
+                'choices' => array( 'one', 'two', 'three' ),
+            )
+        );
+        $this->metadata['radio'] = $post_meta_factory->create(
+            'radio',
+            array(
+                'label' => __('Basic Radio Button', 'wp-metabox'),
+                'type' => 'radio',
+                'choices' => array( 'one', 'two', 'three' ),
+            )
+        );
+        $this->metadata['truefalse'] = $post_meta_factory->create( 'truefalse_example', array( 'type' => 'boolean' ) );
+
+
 
         add_filter( 'the_content' , array($this, 'display') );
     }
@@ -90,6 +110,14 @@ class Example_Content_Type extends WP_ContentType {
                 'label' => __( 'Ordered List', 'wp-metabox' ),
                 'posttype' => $this->key,
                 'type' => 'ordered-list'
+            )
+        );
+
+        # creates a simple metabox with an ordered list
+        $this->metaboxes['checkbox'] = new WP_SimpleMetabox( 'checkbox', $postmeta_factory, array (
+                'label' => __( 'Checkbox', 'wp-metabox' ),
+                'posttype' => $this->key,
+                'type' => 'checkbox'
             )
         );
 
