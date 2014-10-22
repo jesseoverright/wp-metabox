@@ -38,16 +38,17 @@ class WP_PostMetaFactory implements PostMetaFactory {
     protected function __construct() {
         # register default post meta types
         $this->registered_postmeta_types = array (
-            'url' => 'WP_URLMeta',
-            'select' => 'WP_SelectMeta',
-            'textarea' => 'WP_TextareaMeta',
-            'media' => 'WP_MediaMeta',
-            'image' => 'WP_MediaMeta',
-            'ordered' => 'WP_OrderedListMeta',
-            'ordered-list' => 'WP_OrderedListMeta',
-            'int' => 'WP_NumberMeta',
-            'number' => 'WP_NumberMeta',
-            'text' => 'WP_TextMeta'
+            'url'           => 'WP_URLMeta',
+            'select'        => 'WP_SelectMeta',
+            'textarea'      => 'WP_TextareaMeta',
+            'media'         => 'WP_MediaMeta',
+            'date'          => 'WP_DateMeta',
+            'image'         => 'WP_MediaMeta',
+            'ordered'       => 'WP_OrderedListMeta',
+            'ordered-list'  => 'WP_OrderedListMeta',
+            'int'           => 'WP_NumberMeta',
+            'number'        => 'WP_NumberMeta',
+            'text'          => 'WP_TextMeta'
         );
     }
 
