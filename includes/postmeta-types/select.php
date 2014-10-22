@@ -47,11 +47,6 @@ class WP_SelectMeta extends WP_PostMeta {
      * @return html          input content
      */
     protected function display_input( $data ) {
-        
-        // add linebreak if label is displayed
-        if ( ! $this->hidelabel ) {
-            echo "<br>";
-        }
 
         echo "<select id=\"{$this->key}\" name=\"{$this->key}\">";
         if ( $this->placeholder ) {
@@ -81,15 +76,37 @@ class WP_SelectMeta extends WP_PostMeta {
     }
 
     /**
+     * Displays the label in the admin area
+     * @return html label
+     */
+    protected function display_label() {
+
+        parent::display_label();
+
+        // add linebreak if label is displayed
+        if ( ! $this->hidelabel ) {
+            echo "<br>";
+        }
+    }
+
+    /**
      * Validates on select choices and updates post meta for a post in WP database
      * @param  int $post_id individual post id
      * @param  $data    content
      */
     public function update( $post_id, $data ) {
         if ( $this->has_custom_labels ) {
-            if ( array_key_exists( $data, $this->choices ) ) $data = $data; else $data = '';
+            if ( array_key_exists( $data, $this->choices ) ) {
+                $data = $data;
+            } else {
+                $data = '';
+            }
         } else {
-            if ( in_array( $data, $this->choices ) ) $data = $data; else $data = '';
+            if ( in_array( $data, $this->choices ) ) {
+                $data = $data;
+            } else { 
+                $data = '';
+            }
         }
 
         parent::update( $post_id, $data );
