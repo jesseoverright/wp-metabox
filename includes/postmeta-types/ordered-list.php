@@ -2,6 +2,12 @@
 
 class WP_OrderedListMeta extends WP_PostMeta {
     /**
+     * Max length of textbox
+     * @var integer
+     */
+    protected $max_length = 255;
+
+    /**
      * Constructor
      *
      * Enqueues required javascript for sortable array

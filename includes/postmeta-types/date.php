@@ -5,6 +5,7 @@
  */
 class WP_DateMeta extends WP_PostMeta {
     protected $input_type = 'date';
+    protected $max_length = 32;
 
     /**
      * Enqueues javascript for datepicker ui
