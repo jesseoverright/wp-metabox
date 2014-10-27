@@ -2,6 +2,12 @@
 
 class WP_OrderedListMeta extends WP_PostMeta {
     /**
+     * Max length of textbox
+     * @var integer
+     */
+    protected $max_length = 255;
+
+    /**
      * Constructor
      *
      * Enqueues required javascript for sortable array
@@ -87,7 +93,7 @@ class WP_OrderedListMeta extends WP_PostMeta {
     public function enqueue_scripts() {
         wp_enqueue_script( 'jquery-ui-sortable' );
 
-        wp_enqueue_script( 'wp-metabox-ordered-list-js', plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'js/ordered-list.js', array( 'jquery', 'jquery-ui-sortable' ), 'version' );
+        wp_enqueue_script( 'wp-metabox-ordered-list-js', plugin_dir_url( dirname( dirname( __FILE__ ) ) ) . 'js/ordered-list.js', array( 'jquery', 'jquery-ui-sortable' ), WP_METABOX_VERSION );
 
     }
 }

@@ -45,6 +45,7 @@ class WP_PostMetaFactory implements PostMetaFactory {
             'boolean'       => 'WP_BooleanMeta',
             'textarea'      => 'WP_TextareaMeta',
             'media'         => 'WP_MediaMeta',
+            'date'          => 'WP_DateMeta',
             'image'         => 'WP_MediaMeta',
             'ordered'       => 'WP_OrderedListMeta',
             'ordered-list'  => 'WP_OrderedListMeta',

@@ -11,7 +11,7 @@ class WP_TextareaMeta extends WP_PostMeta {
      * Number of rows for textarea
      * @var integer
      */
-    protected $rows = 2;
+    protected $rows = 3;
 
     /**
      * Constructor adds height option

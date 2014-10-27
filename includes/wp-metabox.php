@@ -74,10 +74,17 @@ class WP_Metabox implements Metabox {
         $this->_post_meta_factory = $post_meta_factory;
 
         $this->key = $key;
-        $this->label = $args['label'];
+        
+        if ( array_key_exists( 'label', $args ) ) {
+            $this->label = $args['label'];
+        } else {
+            $this->label = $this->key;
+        }
+
         if ( array_key_exists( 'posttype', $args ) ) {
             $this->posttype = $args['posttype'];
         }
+
         if ( array_key_exists( 'context', $args ) ) {
             $this->context = $args['context'];
         }

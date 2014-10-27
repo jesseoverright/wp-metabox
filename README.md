@@ -21,6 +21,7 @@ WP-Metabox can be used to create and extend custom postmeta types, custom metabo
 - Radio buttons
 - Checkboxes
 - Textareas
+- Dates (in yyyy-mm-dd format)
 - Media & images (using the WordPress media uploader)
 - Ordered lists (with drag n drop)
 

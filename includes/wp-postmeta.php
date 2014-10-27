@@ -179,7 +179,11 @@ require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/media.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/ordered-list.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/checkbox.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/radio.php' );
+require_once( plugin_dir_path( __FILE__ ) . '/postmeta-types/date.php' );
 
-// WP_DateMeta
+// WP_LatLongMeta
+// WP_AddressMeta
+// WP_FaqMeta
+// WP_RadioMeta
 // WP_WYSIWYGMeta
 // WP_EmailMeta
