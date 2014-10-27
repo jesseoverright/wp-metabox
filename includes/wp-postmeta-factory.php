@@ -40,6 +40,9 @@ class WP_PostMetaFactory implements PostMetaFactory {
         $this->registered_postmeta_types = array (
             'url'           => 'WP_URLMeta',
             'select'        => 'WP_SelectMeta',
+            'checkbox'      => 'WP_CheckboxMeta',
+            'radio'         => 'WP_RadioMeta',
+            'boolean'       => 'WP_BooleanMeta',
             'textarea'      => 'WP_TextareaMeta',
             'media'         => 'WP_MediaMeta',
             'date'          => 'WP_DateMeta',

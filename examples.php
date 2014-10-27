@@ -10,16 +10,6 @@ class Example_Metabox extends WP_Metabox {
         # A basic text box called 'test'
         $this->metadata['test'] = $post_meta_factory->create( 'test' );
 
-        # A select menu with the following options: one, two, three
-        $this->metadata['select'] = $post_meta_factory->create(
-            'select',
-            array(
-                'label' => __('Basic Select Menu', 'wp-metabox'),
-                'type' => 'select',
-                'choices' => array( 'one', 'two', 'three' ),
-            )
-        );
-
         # A select menu with custom labels
         $this->metadata['label-select'] = $post_meta_factory->create(
             'label-select',
@@ -35,12 +25,21 @@ class Example_Metabox extends WP_Metabox {
             )
         );
 
+        # checkbox and radio examples
+        $this->metadata['radio'] = $post_meta_factory->create(
+            'radio',
+            array(
+                'label' => __('Basic Radio Button', 'wp-metabox'),
+                'type' => 'radio',
+                'choices' => array( 'one', 'two', 'three' ),
+            )
+        );
+
         # an image upload using the media uploader
         $this->metadata['image_upload'] = $post_meta_factory->create( 'image_upload', array( 'type' => 'media' ) );
 
         # a second image upload
         $this->metadata['second_upload'] = $post_meta_factory->create( 'second_upload', array( 'type' => 'media', 'label' => __( 'Second Upload', 'wp-metabox' ) ) );
-
 
         add_filter( 'the_content' , array($this, 'display') );
     }
@@ -81,7 +80,8 @@ class Example_Content_Type extends WP_ContentType {
         # creates another simple metabox with one text input using WP_SimpleMetabox
         $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', $postmeta_factory, array (
                 'label' => __( 'Project Date', 'wp-metabox' ),
-                'posttype' => $this->key
+                'posttype' => $this->key,
+                'type' => 'date'
             )
         );
 
