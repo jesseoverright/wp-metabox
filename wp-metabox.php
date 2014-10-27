@@ -3,7 +3,7 @@
  * Plugin Name: WP Metabox
  * Plugin URI: http://github.com/jesseoverright/wp-metabox
  * Description: A lightweight framework for creating custom metaboxes and custom content types in WordPress.
- * Version: 0.9
+ * Version: 0.9.1
  * Author: Jesse Overright
  * Author URI: http://jesseoverright.com
  * License: GPL2
@@ -25,7 +25,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define( 'WP_METABOX_VERSION', '0.9' );
+define( 'WP_METABOX_VERSION', '0.9.1' );
 
 require_once( plugin_dir_path( __FILE__ ) . '/includes/wp-postmeta.php' );
 require_once( plugin_dir_path( __FILE__ ) . '/includes/wp-postmeta-factory.php' );
