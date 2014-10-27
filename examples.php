@@ -80,7 +80,8 @@ class Example_Content_Type extends WP_ContentType {
         # creates another simple metabox with one text input using WP_SimpleMetabox
         $this->metaboxes['project-date'] = new WP_SimpleMetabox( 'project-date', $postmeta_factory, array (
                 'label' => __( 'Project Date', 'wp-metabox' ),
-                'posttype' => $this->key
+                'posttype' => $this->key,
+                'type' => 'date'
             )
         );
 
