@@ -10,16 +10,6 @@ class Example_Metabox extends WP_Metabox {
         # A basic text box called 'test'
         $this->metadata['test'] = $post_meta_factory->create( 'test' );
 
-        # A select menu with the following options: one, two, three
-        $this->metadata['select'] = $post_meta_factory->create(
-            'select',
-            array(
-                'label' => __('Basic Select Menu', 'wp-metabox'),
-                'type' => 'select',
-                'choices' => array( 'one', 'two', 'three' ),
-            )
-        );
-
         # A select menu with custom labels
         $this->metadata['label-select'] = $post_meta_factory->create(
             'label-select',
@@ -35,21 +25,7 @@ class Example_Metabox extends WP_Metabox {
             )
         );
 
-        # an image upload using the media uploader
-        $this->metadata['image_upload'] = $post_meta_factory->create( 'image_upload', array( 'type' => 'media' ) );
-
-        # a second image upload
-        $this->metadata['second_upload'] = $post_meta_factory->create( 'second_upload', array( 'type' => 'media', 'label' => __( 'Second Upload', 'wp-metabox' ) ) );
-
         # checkbox and radio examples
-        $this->metadata['checkbox'] = $post_meta_factory->create(
-            'checkbox',
-            array(
-                'label' => __('Basic Checkbox', 'wp-metabox'),
-                'type' => 'checkbox',
-                'choices' => array( 'one', 'two', 'three' ),
-            )
-        );
         $this->metadata['radio'] = $post_meta_factory->create(
             'radio',
             array(
@@ -58,9 +34,12 @@ class Example_Metabox extends WP_Metabox {
                 'choices' => array( 'one', 'two', 'three' ),
             )
         );
-        $this->metadata['truefalse'] = $post_meta_factory->create( 'truefalse_example', array( 'type' => 'boolean' ) );
 
+        # an image upload using the media uploader
+        $this->metadata['image_upload'] = $post_meta_factory->create( 'image_upload', array( 'type' => 'media' ) );
 
+        # a second image upload
+        $this->metadata['second_upload'] = $post_meta_factory->create( 'second_upload', array( 'type' => 'media', 'label' => __( 'Second Upload', 'wp-metabox' ) ) );
 
         add_filter( 'the_content' , array($this, 'display') );
     }
@@ -110,14 +89,6 @@ class Example_Content_Type extends WP_ContentType {
                 'label' => __( 'Ordered List', 'wp-metabox' ),
                 'posttype' => $this->key,
                 'type' => 'ordered-list'
-            )
-        );
-
-        # creates a simple metabox with an ordered list
-        $this->metaboxes['checkbox'] = new WP_SimpleMetabox( 'checkbox', $postmeta_factory, array (
-                'label' => __( 'Checkbox', 'wp-metabox' ),
-                'posttype' => $this->key,
-                'type' => 'checkbox'
             )
         );
 
