@@ -96,15 +96,11 @@ class WP_SelectMeta extends WP_PostMeta {
      */
     public function update( $post_id, $data ) {
         if ( $this->has_custom_labels ) {
-            if ( array_key_exists( $data, $this->choices ) ) {
-                $data = $data;
-            } else {
+            if ( ! array_key_exists( $data, $this->choices ) ) {
                 $data = '';
             }
         } else {
-            if ( in_array( $data, $this->choices ) ) {
-                $data = $data;
-            } else { 
+            if ( ! in_array( $data, $this->choices ) ) { 
                 $data = '';
             }
         }
