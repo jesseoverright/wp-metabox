@@ -15,6 +15,13 @@ if ( ! interface_exists( 'PostMetaFactory' ) ) {
          * @return WP_PostMeta          the post meta object
          */
         public function create( $key, $args = array() );
+
+        /**
+         * Registers a new postmeta type for the factory
+         * @param  string $type                name of the postmeta type
+         * @param  class $postmeta_class_name  class name to be used
+         */
+        public function register_postmeta_type( $type, $postmeta_class_name );
     }
 }
 
