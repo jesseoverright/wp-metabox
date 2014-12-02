@@ -24,7 +24,7 @@ if ( ! interface_exists( 'Metabox' ) ) {
     }
 }
 
-class WP_Metabox implements Metabox {
+abstract class WP_Metabox implements Metabox {
     /**
      * Key of the metabox
      * @var string
