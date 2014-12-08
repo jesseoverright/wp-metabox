@@ -36,6 +36,10 @@ class WP_CheckboxMeta extends WP_SelectMeta {
      * @param  array $data    checked boxes
      */
     public function update( $post_id, $data ) {
+        if ( ! is_array ( $data ) ) {
+            $data = array();
+        }
+        
         foreach ( $data as $key => $value ) {
             if ( $this->has_custom_labels ) {
                 if ( ! array_key_exists( $value, $this->choices ) ) {
